@@ -14,7 +14,7 @@ The project will be using a new package for keyword searches; our current candid
 
 Users may also register to save search results for future reference, which will be stored with Firebase per user account.
 ##Purpose
-Inspired by Yale’s Human Resource and Area Files (HRAF), the NACD aims to provide an unprecedented multimedia approach to cross-cultural studies. It will use keyword searches and/or topic browsing to seek and compare relevant materials from one or different Native cultures. The NACD will be written with language accessible to specialist and layperson alike, to provide a powerful resource for research on cultural subjects.
+Inspired by Yale’s Human Relations Area Files (HRAF), the NACD aims to provide an unprecedented multimedia approach to cross-cultural studies. It will use keyword searches and/or topic browsing to seek and compare relevant materials from one or different Native cultures. The NACD will be written with language accessible to specialist and layperson alike, to provide a powerful resource for research on cultural subjects.
 
 While the HRAF has a critical engine for measuring the significance of cross-cultural comparison and a significant corpus of ethnographic literature, its Native American selection is limited, with few materials from the Natives themselves. The Reciprocal Research Network, founded by First Nations developers in British Columbia, integrates contributions from Native, museum, or academic researchers. However, its medium is principally photographs of artifacts provided by museum databases, with uneven cultural discussion of their relevance.
 
