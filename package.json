@@ -1,0 +1,17 @@
+{
+  "name": "nativeencyclopedia",
+  "version": "1.0.0",
+  "description": "An open-source encyclopedia on Native American cultures, powered by Sequelize",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies":{
+    "express": "^4.14.0",
+    "express-handlebars": "^3.0.0",
+    "mysql": "^2.12.0"
+  },
+  "authors": "Edgar Martin del Campo, Jason Mosley, John Nowinsky",
+  "license": "ISC"
+}
