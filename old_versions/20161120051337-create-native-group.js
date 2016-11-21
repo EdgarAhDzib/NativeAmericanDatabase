@@ -14,10 +14,10 @@ module.exports = {
       region: {
         type: Sequelize.STRING
       },
-      country: {
+      country_one: {
         type: Sequelize.STRING
       },
-      period: {
+      country_two: {
         type: Sequelize.STRING
       },
       createdAt: {

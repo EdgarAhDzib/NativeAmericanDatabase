@@ -1,29 +1,26 @@
 'use strict';
 module.exports = {
   up: function(queryInterface, Sequelize) {
-    return queryInterface.createTable('media_sources', {
+    return queryInterface.createTable('native_groups', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      content_id: {
-        type: Sequelize.INTEGER
-      },
-      img_ref_1: {
+      name: {
         type: Sequelize.STRING
       },
-      img_ref_2: {
+      alt_name: {
         type: Sequelize.STRING
       },
-      img_ref_3: {
+      region: {
         type: Sequelize.STRING
       },
-      img_ref_4: {
+      country_one: {
         type: Sequelize.STRING
       },
-      museum: {
+      country_two: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -37,6 +34,6 @@ module.exports = {
     });
   },
   down: function(queryInterface, Sequelize) {
-    return queryInterface.dropTable('media_sources');
+    return queryInterface.dropTable('native_groups');
   }
 };

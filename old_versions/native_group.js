@@ -2,7 +2,6 @@
 module.exports = function(sequelize, DataTypes) {
   var native_group = sequelize.define('native_group', {
     name: DataTypes.STRING,
-    alt_name: DataTypes.STRING,
     region: DataTypes.STRING,
     country_one: DataTypes.STRING,
     country_two: DataTypes.STRING

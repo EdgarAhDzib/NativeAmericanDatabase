@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: function(queryInterface, Sequelize) {
-    return queryInterface.createTable('media_sources', {
+    return queryInterface.createTable('source_refs', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,20 +11,17 @@ module.exports = {
       content_id: {
         type: Sequelize.INTEGER
       },
-      img_ref_1: {
+      author: {
         type: Sequelize.STRING
       },
-      img_ref_2: {
+      url: {
         type: Sequelize.STRING
       },
-      img_ref_3: {
+      contributor: {
         type: Sequelize.STRING
       },
-      img_ref_4: {
-        type: Sequelize.STRING
-      },
-      museum: {
-        type: Sequelize.STRING
+      publication: {
+        type: Sequelize.TEXT
       },
       createdAt: {
         allowNull: false,
@@ -37,6 +34,6 @@ module.exports = {
     });
   },
   down: function(queryInterface, Sequelize) {
-    return queryInterface.dropTable('media_sources');
+    return queryInterface.dropTable('source_refs');
   }
 };
