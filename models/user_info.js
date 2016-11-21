@@ -9,7 +9,8 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        // hasMany with text_content and media_source?
+        user_info.belongsToMany(models.media_source, {through: 'UserMedia'});
+        user_info.belongsToMany(models.text_contents, {through: 'UserContent'});
       }
     }
   });

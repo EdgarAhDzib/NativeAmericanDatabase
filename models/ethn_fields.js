@@ -8,6 +8,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
+        ethn_fields.belongsToMany(models.text_contents, {through: 'FieldContent'});
       }
     }
   });

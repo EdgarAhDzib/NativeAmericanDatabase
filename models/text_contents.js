@@ -13,8 +13,11 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        // This may be the only table that requires association,
-        // but perhaps native_group and ethn_field will belongToMany
+        text_contents.hasOne(models.media_source);
+        text_contents.hasOne(models.native_group);
+        text_contents.hasOne(models.source_ref);
+        text_contents.belongsToMany(models.user_info, {through: 'UserContent'});
+        text_contents.belongsToMany(models.ethn_fields, {through: 'FieldContent'});
       }
     }
   });
