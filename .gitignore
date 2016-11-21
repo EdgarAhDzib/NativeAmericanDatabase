@@ -1,3 +1,4 @@
 node_modules
-keys.js
-proposal.txt
+config/keys.js
+config/config.json
+dev_notes
