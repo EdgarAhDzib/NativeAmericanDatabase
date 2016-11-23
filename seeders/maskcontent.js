@@ -184,10 +184,11 @@ app.listen(PORT, function() {
 });
 
 //Create a new item_id column in text_contents for the RRN ID, to prevent redundant populating
+//For these RRN entries the is_published default is TRUE
 
 /*
-connection.query("INSERT INTO text_contents (`item_title`, `item_id`, `notes`, `main_desc`, `long_desc`, `context`, `research_notes`, `display`, `prim_doc`) VALUES (?,?,?,?,?,?,?,?,?)",
-[sqlName, itemRRNId, sqlNotes, sqlDesc, sqlLongDesc, sqlContext, sqlResearch, sqlDisplay, sqlDoc] , function(err){
+connection.query("INSERT INTO text_contents (`item_title`, `item_id`, `notes`, `main_desc`, `long_desc`, `context`, `research_notes`, `display`, `prim_doc`, `is_published`) VALUES (?,?,?,?,?,?,?,?,?,?)",
+[sqlName, itemRRNId, sqlNotes, sqlDesc, sqlLongDesc, sqlContext, sqlResearch, sqlDisplay, sqlDoc, 1] , function(err){
 if (err) throw err;
 });
 */
