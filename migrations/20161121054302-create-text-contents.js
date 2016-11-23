@@ -11,6 +11,9 @@ module.exports = {
       item_title: {
         type: Sequelize.STRING
       },
+      item_id: {
+        type: Sequelize.STRING
+      },
       group: {
         type: Sequelize.STRING
       },
@@ -37,6 +40,9 @@ module.exports = {
       },
       prim_doc: {
         type: Sequelize.TEXT
+      },
+      if_published: {
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,

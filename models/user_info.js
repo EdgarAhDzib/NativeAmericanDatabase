@@ -4,7 +4,9 @@ module.exports = function(sequelize, DataTypes) {
     name: DataTypes.STRING,
     email: DataTypes.STRING,
     sword_fish: DataTypes.STRING,
-    saved_searches: DataTypes.TEXT
+    saved_searches: DataTypes.TEXT,
+    role: DataTypes.STRING,
+    draft: DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function(models) {

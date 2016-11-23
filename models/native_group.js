@@ -1,7 +1,7 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var native_group = sequelize.define('native_group', {
-    name: DataTypes.STRING,
+    group_name: DataTypes.STRING,
     alt_name: DataTypes.STRING,
     region: DataTypes.STRING,
     country_one: DataTypes.STRING,

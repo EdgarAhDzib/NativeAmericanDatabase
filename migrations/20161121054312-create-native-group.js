@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      group_name: {
         type: Sequelize.STRING
       },
       alt_name: {
