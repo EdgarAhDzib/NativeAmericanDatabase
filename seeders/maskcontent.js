@@ -29,7 +29,7 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 //culture+Nasca%2C+held+at+MOA%3A+University+of+British+Columbia%2C
 //https://www.rrncommunity.org/items.json?page=4&per_page=25&filters=type+mask%2C+made+in+Canada%2C
 //https://www.rrncommunity.org/items.json?filters=type+mask%2C+made+in+Canada%2C+institution+note+Description
-request('https://www.rrncommunity.org/items.json?per_page=50&filters=type+mask%2C+made+in+Canada%2C', function (error, response, body) {
+request('https://www.rrncommunity.org/items.json?filters=type+mask%2C+made+in+Canada%2C+institution+note+Description', function (error, response, body) {
 var descText = "";
     if (!error && response.statusCode == 200) {
         var results = JSON.parse(body);
@@ -65,6 +65,65 @@ var descText = "";
             contentArr.push(itemRRNId + "<br/>");
             console.log("text_contents.group : " + sqlCulture + "\n");
             contentArr.push(sqlCulture + "<br/>");
+
+            var instNotes = results.items[i].institution_notes;
+            var notesLength = instNotes.length;
+
+            sqlNotes = "";
+            sqlDesc = "";
+            sqlLongDesc = "";
+            sqlContext = "";
+            sqlResearch = "";
+            sqlDisplay = "";
+            sqlDoc = "";
+
+            for (j=0; j<notesLength; j++) {
+                switch (instNotes[j].title) {
+                    case "Notes" :
+                    sqlNotes = instNotes[j].text;
+                    console.log("text_contents.notes : " + sqlNotes + "\n");
+                    contentArr.push(sqlNotes + "<br/>");
+                    break;
+                    case "Description" :
+                    sqlDesc = instNotes[j].text;
+                    console.log("text_contents.main_desc : " + sqlDesc + "\n");
+                    contentArr.push(sqlDesc + "<br/>");
+                    break;
+                    case "Longer Description" :
+                    sqlLongDesc = instNotes[j].text;
+                    console.log("text_contents.long_desc : " + sqlLongDesc + "\n");
+                    contentArr.push(sqlLongDesc + "<br/>");
+                    break;
+                    case "Context":
+                    sqlContext = instNotes[j].text;
+                    console.log("text_contents.context : " + sqlContext + "\n");
+                    contentArr.push(sqlContext + "<br/>");
+                    break;
+                    case "Research Notes" :
+                    sqlResearch = instNotes[j].text;
+                    console.log("text_contents.research_notes : " + sqlResearch + "\n");
+                    contentArr.push(sqlResearch + "<br/>");
+                    break;
+                    case "Display History" :
+                    sqlDisplay = instNotes[j].text;
+                    console.log("text_contents.display : " + sqlDisplay + "\n");
+                    contentArr.push(sqlDisplay + "<br/>");
+                    break;
+                    case "Primary Documentation" :
+                    sqlDoc = instNotes[j].text;
+                    console.log("text_contents.prim_doc : " + sqlDoc + "\n");
+                    contentArr.push(sqlDoc + "<br/>");
+                    break;
+                }
+/*
+connection.query("INSERT INTO text_contents (`item_title`, `item_id`, `notes`, `main_desc`, `long_desc`, `context`, `research_notes`, `display`, `prim_doc`, `is_published`) VALUES (?,?,?,?,?,?,?,?,?,?)",
+[sqlName, itemRRNId, sqlNotes, sqlDesc, sqlLongDesc, sqlContext, sqlResearch, sqlDisplay, sqlDoc, 1] , function(err){
+if (err) throw err;
+});
+*/
+        }
+
+//The content to populate the source_refs, media_sources, and ethn_fields tables
             console.log("source_refs.original_record_url : " + sqlUrl + "\n");
             contentArr.push(sqlUrl + "<br/>");
             console.log("media_sources.museum : " + sqlMuseum + "\n");
@@ -114,56 +173,7 @@ var descText = "";
                     break;
                 }
             }
-            var instNotes = results.items[i].institution_notes;
-            var notesLength = instNotes.length;
 
-            for (j=0; j<notesLength; j++) {
-                sqlNotes = "";
-                sqlDesc = "";
-                sqlLongDesc = "";
-                sqlContext = "";
-                sqlResearch = "";
-                sqlDisplay = "";
-                sqlDoc = "";
-                switch (instNotes[j].title) {
-                    case "Notes" :
-                    sqlNotes = instNotes[j].text;
-                    console.log("text_contents.notes : " + sqlNotes + "\n");
-                    contentArr.push(sqlNotes + "<br/>");
-                    break;
-                    case "Description" :
-                    sqlDesc = instNotes[j].text;
-                    console.log("text_contents.main_desc : " + sqlDesc + "\n");
-                    contentArr.push(sqlDesc + "<br/>");
-                    break;
-                    case "Longer Description" :
-                    sqlLongDesc = instNotes[j].text;
-                    console.log("text_contents.long_desc : " + sqlLongDesc + "\n");
-                    contentArr.push(sqlLongDesc + "<br/>");
-                    break;
-                    case "Context":
-                    sqlContext = instNotes[j].text;
-                    console.log("text_contents.context : " + sqlContext + "\n");
-                    contentArr.push(sqlContext + "<br/>");
-                    break;
-                    case "Research Notes" :
-                    sqlResearch = instNotes[j].text;
-                    console.log("text_contents.research_notes : " + sqlResearch + "\n");
-                    contentArr.push(sqlResearch + "<br/>");
-                    break;
-                    case "Display History" :
-                    sqlDisplay = instNotes[j].text;
-                    console.log("text_contents.display : " + sqlDisplay + "\n");
-                    contentArr.push(sqlDisplay + "<br/>");
-                    break;
-                    case "Primary Documentation" :
-                    sqlDoc = instNotes[j].text;
-                    console.log("text_contents.prim_doc : " + sqlDoc + "\n");
-                    contentArr.push(sqlDoc + "<br/>");
-                    break;
-                }
-
-        }
         app.get('/',function(req,res){
             var imgHTMLArr = [];
             for (i=0; i<imageArr.length; i++){
@@ -182,13 +192,3 @@ app.use(router);
 app.listen(PORT, function() {
     console.log('App listening on PORT ' + PORT);
 });
-
-//Create a new item_id column in text_contents for the RRN ID, to prevent redundant populating
-//For these RRN entries the is_published default is TRUE
-
-/*
-connection.query("INSERT INTO text_contents (`item_title`, `item_id`, `notes`, `main_desc`, `long_desc`, `context`, `research_notes`, `display`, `prim_doc`, `is_published`) VALUES (?,?,?,?,?,?,?,?,?,?)",
-[sqlName, itemRRNId, sqlNotes, sqlDesc, sqlLongDesc, sqlContext, sqlResearch, sqlDisplay, sqlDoc, 1] , function(err){
-if (err) throw err;
-});
-*/
