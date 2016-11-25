@@ -29,7 +29,7 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 //culture+Nasca%2C+held+at+MOA%3A+University+of+British+Columbia%2C
 //https://www.rrncommunity.org/items.json?page=4&per_page=25&filters=type+mask%2C+made+in+Canada%2C
 //https://www.rrncommunity.org/items.json?filters=type+mask%2C+made+in+Canada%2C+institution+note+Description
-request('https://www.rrncommunity.org/items.json?filters=type+mask%2C+made+in+Canada%2C+institution+note+Description', function (error, response, body) {
+request('https://www.rrncommunity.org/items.json?filters=shaman', function (error, response, body) {
 var descText = "";
     if (!error && response.statusCode == 200) {
         var results = JSON.parse(body);
@@ -53,10 +53,15 @@ var descText = "";
         var itemMaterial = "";
         var imageArr = [];
         var contentArr = [];
+        var createDate = "";
+        var updateDate = "";
+        var currId = "";
         for (i=0; i<results.items.length; i++) {
             itemRRNId = results.items[i].id;
             sqlName = results.items[i].name;
-            sqlCulture = results.items[i].cultures[0].name;
+            if (results.items[i].cultures.length > 0) {
+                sqlCulture = results.items[i].cultures[0].name;
+            }
             sqlUrl = results.items[i].original_record_url;
             sqlMuseum = results.items[i].holding_institution.name;
             console.log("text_contents.item_title : " + sqlName + "\n");
@@ -65,6 +70,11 @@ var descText = "";
             contentArr.push(itemRRNId + "<br/>");
             console.log("text_contents.group : " + sqlCulture + "\n");
             contentArr.push(sqlCulture + "<br/>");
+
+            createDate = new Date();
+            contentArr.push("<br/>" + createDate + "<br/>");
+            updateDate = new Date();
+            contentArr.push(updateDate + "<br/><br/>");
 
             var instNotes = results.items[i].institution_notes;
             var notesLength = instNotes.length;
@@ -116,26 +126,51 @@ var descText = "";
                     break;
                 }
 /*
-connection.query("INSERT INTO text_contents (`item_title`, `item_id`, `notes`, `main_desc`, `long_desc`, `context`, `research_notes`, `display`, `prim_doc`, `is_published`) VALUES (?,?,?,?,?,?,?,?,?,?)",
-[sqlName, itemRRNId, sqlNotes, sqlDesc, sqlLongDesc, sqlContext, sqlResearch, sqlDisplay, sqlDoc, 1] , function(err){
+connection.query("INSERT INTO text_contents (`item_title`, `item_id`, `group`, `notes`, `main_desc`, `long_desc`, `context`, `research_notes`, `display`, `prim_doc`, `is_published`,`createdAt`,`updatedAt`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+[sqlName, itemRRNId, sqlCulture, sqlNotes, sqlDesc, sqlLongDesc, sqlContext, sqlResearch, sqlDisplay, sqlDoc, 1, createDate, updateDate] , function(err,callback){
 if (err) throw err;
+    callback = function() {
+        connection.query("SELECT id FROM text_contents WHERE item_id = ?",itemRRNId, function(result){
+        console.log(result);
+        currId = result;
+        });
+    }
 });
 */
         }
 
-//The content to populate the source_refs, media_sources, and ethn_fields tables
+//These may require movement into the callback from the first query Insert
             console.log("source_refs.original_record_url : " + sqlUrl + "\n");
+/*
+            connection.query("INSERT INTO source_refs (content_id, url, createdAt, updatedAt) VALUES (?,?,?,?)", [currId, sqlUrl, createDate, updateDate], function(err){
+                if (err) throw err;
+            });
+*/
             contentArr.push(sqlUrl + "<br/>");
+            if (results.items[i].item_types.length > 0) {
+                itemType = results.items[i].item_types[0].name;
+                console.log("content_fields.name : " + itemType);
+                contentArr.push(itemType + "<br/>");
+/*
+connection.query("INSERT INTO content_fields (`content_id`,`ethn_id`,`createdAt`,`updatedAt`) VALUES (?,?,?,?)", [currId, itemType, createDate, updateDate], function(err){
+    if (err) throw err;
+});
+*/
+                itemMaterial = results.items[i].materials;
+                for (j=0; j<itemMaterial.length; j++) {
+                    console.log("content_fields.name : " + itemMaterial[j].name);
+                    contentArr.push(itemMaterial[j].name + "<br/>");
+/*
+connection.query("INSERT INTO content_fields (`content_id`,`ethn_id`,`createdAt`,`updatedAt`) VALUES (?,?,?,?)", [currId, itemMaterial[j].name, createDate, updateDate], function(err){
+    if (err) throw err;
+});
+*/
+
+                }
+            }
             console.log("media_sources.museum : " + sqlMuseum + "\n");
             contentArr.push(sqlMuseum + "<br/>");
-            itemType = results.items[i].item_types[0].name;
-            console.log("ethn_fields.name : " + itemType);
-            contentArr.push(itemType + "<br/>");
-            itemMaterial = results.items[i].materials;
-            for (j=0; j<itemMaterial.length; j++) {
-                console.log("ethn_fields.name : " + itemMaterial[j].name);
-                contentArr.push(itemMaterial[j].name + "<br/>");
-            }
+
             var digObj = results.items[i].digital_objects;
             var objLen = digObj.length;
 
@@ -172,12 +207,17 @@ if (err) throw err;
                     case 3 :
                     break;
                 }
+/*
+connection.query("INSERT INTO media_sources (`content_id`,`img_ref_1`,`img_ref_2`,`img_ref_3`,`img_ref_4`, museum, createdAt, updatedAt) VALUES (?,?,?,?,?,?,?,?)", [currId,imgOne, imgTwo, imgThree, imgFour, sqlMuseum, createDate, updateDate], function(err){
+    if (err) throw err;
+});
+*/
             }
 
         app.get('/',function(req,res){
             var imgHTMLArr = [];
             for (i=0; i<imageArr.length; i++){
-                var imgToHTML = "<img src='" + imageArr[i] + "' width='300'/><br/>";
+                var imgToHTML = "<img src='" + imageArr[i] + "' width='250'/><br/>";
                 imgHTMLArr.push(imgToHTML);
             }
             var fullString = imgHTMLArr.join("");
