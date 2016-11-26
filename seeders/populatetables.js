@@ -52,13 +52,12 @@ var currId = "";
 //culture+Nasca%2C+held+at+MOA%3A+University+of+British+Columbia%2C
 //https://www.rrncommunity.org/items.json?page=4&per_page=25&filters=type+mask%2C+made+in+Canada%2C
 //https://www.rrncommunity.org/items.json?filters=type+mask%2C+made+in+Canada%2C+institution+note+Description
-request('https://www.rrncommunity.org/items.json?per_page=5&filters=culture+Kiowa', function (error, response, body) {
+request('https://www.rrncommunity.org/items.json?per_page=25&filters=shaman', function (error, response, body) {
 var descText = "";
 	if (!error && response.statusCode == 200) {
 		var results = JSON.parse(body);
 		for (i=0; i<results.items.length; i++) {
 			itemRRNId = results.items[i].id;
-			console.log("Line 61 " + itemRRNId);
 			sqlName = results.items[i].name;
 
 			if (results.items[i].item_types.length > 0) {
