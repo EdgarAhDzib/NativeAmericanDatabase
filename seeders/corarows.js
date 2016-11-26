@@ -25,12 +25,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 
-connection.query("SELECT title,introtext FROM native_content WHERE id < 26", function(err, results){
+createDate = new Date();
+
+connection.query("SELECT * FROM sample_content WHERE id > 18", function(err, results){
     if (err) throw err;
     for (i=0; i<results.length; i++) {
-        var escSingle = results[i].introtext.replace(/'/g,"&#39;")
+        var escSingle = results[i].prim_doc.replace(/'/g,"&#39;")
         var escDouble = escSingle.replace(/"/g,"&quot;")
-        connection.query("INSERT INTO text_contents (`item_title`,`prim_doc`) VALUES (?,?)",[results[i].title,escDouble], function(err){
+        connection.query("INSERT INTO text_contents (`item_title`, `group`, `prim_doc`, `if_published`,`createdAt`,`updatedAt`) VALUES (?,?,?,?,?,?)",[results[i].item_title,'Eskimo',escDouble,1,createDate,createDate], function(err){
             if (err) throw err;
         });
     }
