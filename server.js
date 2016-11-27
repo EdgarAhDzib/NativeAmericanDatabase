@@ -1,10 +1,10 @@
 var express = require('express');
 // var router = express.Router();
-var mysql = require('mysql');
+// var mysql = require('mysql');
 var methodOverride = require('method-override');
 
 var app = express();
-var keys = require('./config/keys.js');
+// var keys = require('./config/keys.js');
 
 var models  = require('./models');
 var sequelizeConnection = models.sequelize;
@@ -23,12 +23,12 @@ app.engine('handlebars', exphbs({
 }));
 app.set('view engine', 'handlebars');
 
-var connection = mysql.createConnection(keys.localhost);
+// var connection = mysql.createConnection(keys.localhost);
 
-connection.connect(function(err){
-if (err) throw err;
-	console.log("connected as id " + connection.threadId);
-});
+// connection.connect(function(err){
+// if (err) throw err;
+// 	console.log("connected as id " + connection.threadId);
+// });
 
 var routes = require('./controllers/app.js');
 app.use('/',routes)
