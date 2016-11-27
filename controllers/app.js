@@ -4,12 +4,12 @@ var models  = require('../models');
 var mysql = require('mysql');
 var keys = require('../config/keys.js');
 
-var connection = mysql.createConnection(keys.localhost);
+// var connection = mysql.createConnection(keys.localhost);
 
-connection.connect(function(err){
-if (err) throw err;
-	console.log("connected as id " + connection.threadId);
-});
+// connection.connect(function(err){
+// if (err) throw err;
+// 	console.log("connected as id " + connection.threadId);
+// });
 
 // Below are the routes which will be needed by the app
 
@@ -19,8 +19,10 @@ router.get('/', function(req, response) {
 });
 
 router.get('/home', function(req, response){
-	connection.query("SELECT * FROM text_contents", function(err, data){
-		if (err) throw err;
+	// connection.query("SELECT * FROM text_contents", function(err, data){
+	// 	if (err) throw err;
+	models.text_contents.findAll({
+	}).then(function(data) {	
 		var handleObj = { entry: data };
 		response.render('index', handleObj);
 	});
