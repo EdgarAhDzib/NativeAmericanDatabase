@@ -17,10 +17,10 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        text_contents.hasOne(models.media_source);
+        text_contents.belongsToMany(models.media_source, {through: 'MediaContent'});
         text_contents.hasOne(models.source_ref);
         text_contents.belongsToMany(models.user_info, {through: 'UserContent'});
-        text_contents.belongsToMany(models.ethn_fields, {through: 'FieldContent'});
+        text_contents.belongsToMany(models.content_fields, {through: 'FieldContent'});
       }
     }
   });
