@@ -25,6 +25,29 @@
 				</div>
 		</div>
 	</div>
+
+{{#if isGroup}}
+<h2>Results for
+	{{#each entry}}
+		{{#if @first}}
+			{{this.group}}
+		{{/if}}
+	{{/each}}
+</h2>
+{{/if}}
+
+{{#if isSubj}}
+<h2>Results for 
+	{{#each entry}}
+		{{#each content_fields}}
+			{{#if @first}}
+				'{{this.ethn_id}}'
+			{{/if}}
+		{{/each}}
+	{{/each}}
+</h2>
+{{/if}}
+
 {{#if searchParam}}
 
 	{{> search/search}}

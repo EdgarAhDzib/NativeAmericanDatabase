@@ -41,7 +41,7 @@ router.get('/subj/:categ', function(req, response){
 	})
 	.then(function(results){
 		//Write this as a RETURN for Karma testing
-		var handleObj = {entry:results, searchParam: true};
+		var handleObj = {entry:results, isSubj:true, searchParam: true};
 		response.render('index', handleObj);
 	});
 
@@ -60,7 +60,7 @@ router.get('/group/:groupname', function(req, response){
 	})
 	.then(function(results){
 		//Write this as a RETURN for Karma testing
-		var handleObj = {entry:results, searchParam: true};
+		var handleObj = {entry:results, isGroup:true, searchParam: true};
 		response.render('index', handleObj);
 	});
 
