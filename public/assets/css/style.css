@@ -1,0 +1,35 @@
+.Background {
+    bottom: 0;
+    background-image: url(../images/fashion-fell-pattern-rug-stock-photos-images-2014-collection-220773.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    left: 0;
+    opacity: 0.20;
+    right: 0;
+    top: 0;
+    position: fixed;
+    z-index: -1;
+}
+
+.navbar-inverse {
+    background: #44643d;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: white;
+}
+
+.navbar-inverse .navbar-brand {
+    color: white;
+}
+
+#mask {
+    z-index: 10;
+    display: block;
+    margin: 0 auto;
+}
+
+img.center {
+    display: block;
+    margin: 0 auto;
+}

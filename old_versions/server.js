@@ -1,10 +1,38 @@
 var express = require('express');
 var router = express.Router();
-var models  = require('../models');
 var mysql = require('mysql');
-var keys = require('../config/keys.js');
+var methodOverride = require('method-override');
 
-// Below are the routes which will be needed by the app
+var app = express();
+var keys = require('./config/keys.js');
+
+var models  = require('./models');
+
+var sequelizeConnection = models.sequelize;
+
+sequelizeConnection.query('SET FOREIGN_KEY_CHECKS = 0').then(function(){
+	return sequelizeConnection.sync() //{force:true} empties the table
+});
+
+app.use(express.static(process.cwd() + '/'));
+
+// override with POST having ?_method=PUT
+app.use(methodOverride('_method'));
+var exphbs = require('express-handlebars');
+app.engine('handlebars', exphbs({
+	defaultLayout: 'main'
+}));
+app.set('view engine', 'handlebars');
+
+var connection = mysql.createConnection(keys.localhost);
+
+connection.connect(function(err){
+if (err) throw err;
+	console.log("connected as id " + connection.threadId);
+});
+
+//migrate these routers to the controllers directory
+app.use(router);
 
 //Redirect the default path to /home
 router.get('/', function(req, response) {
@@ -12,10 +40,8 @@ router.get('/', function(req, response) {
 });
 
 router.get('/home', function(req, response){
-	// connection.query("SELECT * FROM text_contents", function(err, data){
-	// 	if (err) throw err;
-	models.text_contents.findAll({
-	}).then(function(data) {	
+	connection.query("SELECT * FROM text_contents", function(err, data){
+		if (err) throw err;
 		var handleObj = { entry: data };
 		response.render('index', handleObj);
 	});
@@ -41,8 +67,8 @@ router.get('/subj/:categ', function(req, response){
 	})
 	.then(function(results){
 		//Write this as a RETURN for Karma testing
-		var handleObj = {entry:results, searchParam: true};
-		response.render('index', handleObj);
+		var handleObj = {entry:results};
+		response.render('search', handleObj);
 	});
 
 });
@@ -60,10 +86,15 @@ router.get('/group/:groupname', function(req, response){
 	})
 	.then(function(results){
 		//Write this as a RETURN for Karma testing
-		var handleObj = {entry:results, searchParam: true};
-		response.render('index', handleObj);
+		var handleObj = {entry:results};
+		response.render('search', handleObj);
 	});
 
 });
 
-module.exports = router;
+//Run Karma tester for POST
+
+var port = 8080;
+app.listen(process.env.PORT || port, function() {
+	console.log('Listening on PORT ' + port);
+});
