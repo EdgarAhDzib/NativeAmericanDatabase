@@ -1,4 +1,12 @@
 var express = require('express');
+var path = require('path');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var expressValidator = require('express-validator');
+var flash = require('connect-flash');
+var session = require('express-session');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 var methodOverride = require('method-override');
 
 var app = express();
@@ -20,8 +28,51 @@ app.engine('handlebars', exphbs({
 }));
 app.set('view engine', 'handlebars');
 
-var routes = require('./controllers/app.js');
-app.use('/',routes)
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+app.use(expressValidator({
+  errorFormatter: function(param, msg, value) {
+      var namespace = param.split('.')
+      , root    = namespace.shift()
+      , formParam = root;
+
+    while(namespace.length) {
+      formParam += '[' + namespace.shift() + ']';
+    }
+    return {
+      param : formParam,
+      msg   : msg,
+      value : value
+    };
+  }
+}));
+
+app.use(flash());
+
+app.use(session({
+	secret: 'nativeamerican',
+	saveUnitialized: true,
+	resave: true
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(function(req, response, next) {
+	response.locals.success_msg = req.flash('success_msg');
+	response.locals.error_msg = req.flash('error_msg');
+	response.locals.error = req.flash('error');
+	response.locals.user = req.user || null;
+	next();
+});
+
+var routes = require('./controllers/app');
+app.use('/', routes);
+
+var users = require('./controllers/users');
+app.use('/users', users);
 
 var port = 8080;
 app.listen(process.env.PORT || port, function() {
