@@ -3,6 +3,7 @@
 		<div>
 			{{#each media_sources}}
 				{{#if @first}}
+					<div class="youTube" id="{{this.youtube}}"></div>
 					<img src="{{this.img_ref_1}}" width="150"/>
 				{{/if}}
 			{{/each}}
