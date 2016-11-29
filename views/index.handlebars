@@ -5,8 +5,12 @@
 			<a class="navbar-brand" href="../">The Native American Database</a>
 		</div>
 		<ul class="nav navbar-nav navbar-right">
-			<li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-			<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+			{{#if user}}
+				<li><a href="/users/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+			{{else}}	
+				<li><a href="/users/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+				<li><a href="/users/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+			{{/if}}
 		</ul>
 	</div>
 </nav>

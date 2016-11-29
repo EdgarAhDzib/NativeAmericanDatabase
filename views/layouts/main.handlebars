@@ -8,6 +8,18 @@
 		<link rel="stylesheet" type="text/css" href="../../assets/css/style.css">
 	</head>
 	<body>
+		{{#if success_msg}}
+			<div class="alert alert-success">{{success_msg}}</div>
+		{{/if}}	
+
+		{{#if error_msg}}
+			<div class="alert alert-danger">{{error_msg}}</div>
+		{{/if}}	
+
+		{{#if error}}
+			<div class="alert alert-danger">{{error}}</div>
+		{{/if}}	
+
 		{{{ body }}}
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js "></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js "></script>

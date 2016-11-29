@@ -7,12 +7,19 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "dependencies":{
+  "dependencies": {
+    "bcryptjs": "^2.3.0",
+    "body-parser": "^1.15.2",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
     "express-handlebars": "^3.0.0",
-    "mysql": "^2.12.0",
-    "body-parser": "^1.15.2",
+    "express-session": "^1.14.2",
+    "express-validator": "^3.0.0",
     "method-override": "^2.3.6",
+    "mysql": "^2.12.0",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "sequelize": "^3.25.1"
   },
   "authors": "Edgar Martin del Campo, Jason Mosley, John Nowinsky",

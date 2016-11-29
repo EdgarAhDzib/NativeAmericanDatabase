@@ -21,6 +21,10 @@ router.get('/home', function(req, response){
 	});
 });
 
+router.get('/authenticated', authenticatedUser, function(req,response){
+	response.render('authenticated');
+});
+
 //Use Karma testing for proper case
 
 router.get('/subj/:categ', function(req, response){
@@ -65,5 +69,14 @@ router.get('/group/:groupname', function(req, response){
 	});
 
 });
+
+function authenticatedUser(req, response, next){
+	if(req.isAuthenticated()){
+		return next();
+	} else {
+		req.flash('error_msg','You are not logged in.');
+		response.redirect('/users/login');
+	}
+}
 
 module.exports = router;
