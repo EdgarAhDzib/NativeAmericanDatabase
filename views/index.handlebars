@@ -39,11 +39,11 @@
 {{#if isSubj}}
 <h2>Results for 
 	{{#each entry}}
-		{{#each content_fields}}
-			{{#if @first}}
+		{{#if @first}}
+			{{#each content_fields}}
 				'{{this.ethn_id}}'
-			{{/if}}
-		{{/each}}
+			{{/each}}
+		{{/if}}
 	{{/each}}
 </h2>
 {{/if}}
