@@ -11,6 +11,9 @@ module.exports = {
       content_id: {
         type: Sequelize.INTEGER
       },
+      youtube: {
+        type: Sequelize.STRING
+      },
       img_ref_1: {
         type: Sequelize.STRING
       },
