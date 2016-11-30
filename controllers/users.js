@@ -49,13 +49,32 @@ router.post('/signup', function(req, response){
 			role: role
 		}
 
-		models.user_info.create(newUser).then(function(){
-			req.flash('success_msg', 'You are signed up can now login');
-			response.redirect('./login');
+		models.user_info.findOne({
+	  		where: {
+	  			'email': email
+	  		}
+		}).then(function(user) {
+			if (user == null) {
+				models.user_info.create(newUser).then(function(){
+					req.flash('success_msg', 'You are signed up can now login');
+					response.redirect('./login');
+				})
+			} else {
+				req.flash('error',"You have an account.");
+				response.redirect('./login');
+			}			
 		}).catch(function(error){
-			req.flash('error',"Please use a different email");
-			response.redirect('/signup');
+			req.flash('error',"There was a problem signing you up. Try Again");
+			response.redirect('./signup');
 		})
+
+		// models.user_info.create(newUser).then(function(){
+		// 	req.flash('success_msg', 'You are signed up can now login');
+		// 	response.redirect('./login');
+		// }).catch(function(error){
+		// 	req.flash('error',"Please use a different email");
+		// 	response.redirect('/signup');
+		// })
 	}
 });
 
@@ -75,7 +94,10 @@ passport.use(new LocalStrategy({
   		}
 
   		if(bcrypt.compareSync(password,user.sword_fish)) {
-  			return done(null, user)
+  			if (user.role != 'editor') {
+  				user.role = null;
+  			}  				
+  			return done(null, user,user.name,user.email,user.role)
   		}
 
   		return done(null, false, {message: 'Invalid email or password'})
