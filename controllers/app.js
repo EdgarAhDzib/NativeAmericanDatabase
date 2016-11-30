@@ -1,82 +1,80 @@
 var express = require('express');
-var router = express.Router();
-var models  = require('../models');
-var mysql = require('mysql');
-var keys = require('../config/keys.js');
+var path = require('path');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var expressValidator = require('express-validator');
+var flash = require('connect-flash');
+var session = require('express-session');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var methodOverride = require('method-override');
 
-// Below are the routes which will be needed by the app
+var app = express();
 
-//Redirect the default path to /home
-router.get('/', function(req, response) {
-	response.redirect('/home');
+var models  = require('./models');
+var sequelizeConnection = models.sequelize;
+
+sequelizeConnection.query('SET FOREIGN_KEY_CHECKS = 0').then(function(){
+	return sequelizeConnection.sync() //{force:true} empties the table
 });
 
-router.get('/home', function(req, response){
-	// connection.query("SELECT * FROM text_contents", function(err, data){
-	// 	if (err) throw err;
-	models.text_contents.findAll({
-	}).then(function(data) {	
-		var handleObj = { entry: data };
-		response.render('index', handleObj);
-	});
+app.use(express.static(process.cwd() + '/public'));
+
+// override with POST having ?_method=PUT
+app.use(methodOverride('_method'));
+var exphbs = require('express-handlebars');
+app.engine('handlebars', exphbs({
+	defaultLayout: 'main'
+}));
+app.set('view engine', 'handlebars');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+app.use(expressValidator({
+  errorFormatter: function(param, msg, value) {
+      var namespace = param.split('.')
+      , root    = namespace.shift()
+      , formParam = root;
+
+    while(namespace.length) {
+      formParam += '[' + namespace.shift() + ']';
+    }
+    return {
+      param : formParam,
+      msg   : msg,
+      value : value
+    };
+  }
+}));
+
+app.use(flash());
+
+app.use(session({
+	secret: 'nativeamerican',
+	saveUnitialized: true,
+	resave: true
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(function(req, response, next) {
+	response.locals.success_msg = req.flash('success_msg');
+	response.locals.error_msg = req.flash('error_msg');
+	response.locals.error = req.flash('error');
+	response.locals.user = req.user || null;
+	next();
 });
 
-router.get('/authenticated', authenticatedUser, function(req,response){
-	response.render('authenticated');
+var routes = require('./controllers/app');
+app.use('/', routes);
+
+var users = require('./controllers/users');
+app.use('/users', users);
+
+var port = 8080;
+app.listen(process.env.PORT || port, function() {
+	console.log('Listening on PORT ' + port);
 });
-
-//Use Karma testing for proper case
-
-router.get('/subj/:categ', function(req, response){
-	var categ = req.params.categ;
-
-	models.text_contents.hasMany(models.content_fields, {foreignKey: 'content_id'});
-	models.text_contents.hasMany(models.media_source, {foreignKey: 'content_id'});
-	models.content_fields.belongsTo(models.text_contents, {foreignKey: 'id'});
-	models.media_source.belongsTo(models.text_contents, {foreignKey: 'id'});
-	models.text_contents.findAll( { include: [
-		{
-			model: models.content_fields, where : {ethn_id: categ}
-		},
-		{
-			model: models.media_source
-		}
-		], 
-	})
-	.then(function(results){
-		//Write this as a RETURN for Karma testing
-		var handleObj = {entry:results, isSubj:true, searchParam: true};
-		response.render('index', handleObj);
-	});
-
-});
-
-router.get('/group/:groupname', function(req, response){
-	var groupname = req.params.groupname;
-
-	models.text_contents.hasMany(models.media_source, {foreignKey: 'content_id'});
-	models.media_source.belongsTo(models.text_contents, {foreignKey: 'id'});
-	models.text_contents.findAll( { where : {group: groupname}, include: [
-		{
-			model: models.media_source
-		}
-		], 
-	})
-	.then(function(results){
-		//Write this as a RETURN for Karma testing
-		var handleObj = {entry:results, isGroup:true, searchParam: true};
-		response.render('index', handleObj);
-	});
-
-});
-
-function authenticatedUser(req, response, next){
-	if(req.isAuthenticated()){
-		return next();
-	} else {
-		req.flash('error_msg','You are not logged in.');
-		response.redirect('/users/login');
-	}
-}
-
-module.exports = router;
