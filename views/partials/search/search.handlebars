@@ -1,13 +1,18 @@
 <div class="col-xs-12">
 	{{#each entry}}
 		<div>
-			{{#each media_sources}}
-				{{#if @first}}
-					<div class="youTube" id="{{this.youtube}}"></div>
-					<img src="{{this.img_ref_1}}" width="150"/>
-				{{/if}}
-			{{/each}}
-			{{this.id}} {{{this.item_title}}} {{this.group}}
-		</div><br/><hr/><br/>
+			<a href="../item/{{this.id}}" class="queryItem">
+				{{#each media_sources}}
+					{{#if @first}}
+						<div class="youTube" id="{{this.youtube}}"></div>
+						<img src="{{this.img_ref_1}}" width="150"/>
+					{{/if}}
+				{{/each}}
+			</a>
+			<font style="font-size:200%"><a href="../item/{{this.id}}">{{{this.item_title}}}</a>, {{this.group}}</font>
+		</div>
+		Preview:<br/>
+		<span class="preview">{{{this.prim_doc}}}</span>
+		<br/><hr/><br/>
 	{{/each}}
 </div>
