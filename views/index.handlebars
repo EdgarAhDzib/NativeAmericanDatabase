@@ -2,14 +2,24 @@
 <nav class="navbar navbar-inverse  ">
 	<div class="container-fluid">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="../">The Native American Database</a>
+			{{#if user}}
+				<a class="navbar-brand" href="/home">{{user.name}}</a>
+			{{else}}				
+				<a class="navbar-brand" href="/home">The Native American Database</a>
+			{{/if}}				
 		</div>
 		<ul class="nav navbar-nav navbar-right">
+			<li><a href="/home"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;New Search</a></li>
 			{{#if user}}
-				<li><a href="/users/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+				<li><a href="/mysearches"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;My Searches</a></li>
+				<li><a href="/myarticles"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;My Articles</a></li>			
+				{{#if user.role}}
+					<li><a href="/users/drafts"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;View Drafts</a></li>	
+				{{/if}}	
+				<li><a href="/users/logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Logout</a></li>
 			{{else}}	
-				<li><a href="/users/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-				<li><a href="/users/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+				<li><a href="/users/signup"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Sign Up</a></li>
+				<li><a href="/users/login"><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Login</a></li>
 			{{/if}}
 		</ul>
 	</div>
