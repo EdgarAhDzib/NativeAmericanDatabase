@@ -2,6 +2,9 @@
 	<div>
 		<h1 class="text-center" style="font-weight:700">{{{this.item_title}}}</h1>
 		<h2 class="text-center">{{this.group}}</h2>
+		<h3 class="text-center">{{this.period}}</h3>
+		<h4>{{{this.prim_doc}}}</h4>
+		<h4>{{{this.main_desc}}}</h4>
 		
 		{{#each media_sources}}
 			{{#if @first}}
@@ -39,9 +42,18 @@
 		{{/each}}
 
 		<div class="col-xs-12">
-			<h5>
+			<h4>{{{this.notes}}}</h4>
+			<h4>{{{this.long_desc}}}</h4>
+			<h4>{{{this.context}}}</h4>
+			<h4>{{{this.research_notes}}}</h4>
+			<h4>{{{this.display}}}</h4>
+
+			<h4>
+				<span class="authorSpan">Author: {{source_ref.author}}</span><br/>
+				<span class="contribSpan">Contributor: {{source_ref.contributor}}</span><br/>
+				<span class="pubSpan">Publication: {{source_ref.publication}}</span><br/>
 				<a href="{{source_ref.url}}" target="_blank">Link to original source</a>
-			</h5>
+			</h4>
 		</div>
 		
 	</div>
