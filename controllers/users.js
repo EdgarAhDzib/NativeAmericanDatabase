@@ -49,23 +49,12 @@ router.post('/signup', function(req, response){
 			role: role
 		}
 
-		models.user_info.findOne({
-			where: {
-				'email': email
-			}
-		}).then(function(user) {
-			if ( user == null) {
-				models.user_info.create(newUser).then(function(){
-					req.flash('success_msg', 'You are signed up. You can now login');
-					response.redirect('./login');
-				}).catch(function(error){
-					req.flash('error',"You already have an account.");
-					response.redirect('/login');
-				})				
-			} else {
-				req.flash('error',"You already have an account.");
-				response.redirect('/users/login');				
-			}
+		models.user_info.create(newUser).then(function(){
+			req.flash('success_msg', 'You are signed up can now login');
+			response.redirect('./login');
+		}).catch(function(error){
+			req.flash('error',"Please use a different email");
+			response.redirect('/signup');
 		})
 	}
 });
@@ -81,6 +70,7 @@ passport.use(new LocalStrategy({
   		}
   	}).then(function(user) {
   		if (user == null){
+  			console.log('no match');
   			return done(null, false, {message: 'Invalid email or password'})
   		}
 

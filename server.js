@@ -15,7 +15,7 @@ var models  = require('./models');
 var sequelizeConnection = models.sequelize;
 
 sequelizeConnection.query('SET FOREIGN_KEY_CHECKS = 0').then(function(){
-  return sequelizeConnection.sync() //{force:true} empties the table
+	return sequelizeConnection.sync() //{force:true} empties the table
 });
 
 app.use(express.static(process.cwd() + '/public'));
@@ -24,7 +24,7 @@ app.use(express.static(process.cwd() + '/public'));
 app.use(methodOverride('_method'));
 var exphbs = require('express-handlebars');
 app.engine('handlebars', exphbs({
-  defaultLayout: 'main'
+	defaultLayout: 'main'
 }));
 app.set('view engine', 'handlebars');
 
@@ -52,20 +52,20 @@ app.use(expressValidator({
 app.use(flash());
 
 app.use(session({
-  secret: 'nativeamerican',
-  saveUnitialized: true,
-  resave: true
+	secret: 'nativeamerican',
+	saveUnitialized: true,
+	resave: true
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(function(req, response, next) {
-  response.locals.success_msg = req.flash('success_msg');
-  response.locals.error_msg = req.flash('error_msg');
-  response.locals.error = req.flash('error');
-  response.locals.user = req.user || null;
-  next();
+	response.locals.success_msg = req.flash('success_msg');
+	response.locals.error_msg = req.flash('error_msg');
+	response.locals.error = req.flash('error');
+	response.locals.user = req.user || null;
+	next();
 });
 
 var routes = require('./controllers/app');
@@ -76,5 +76,5 @@ app.use('/users', users);
 
 var port = 8080;
 app.listen(process.env.PORT || port, function() {
-  console.log('Listening on PORT ' + port);
+	console.log('Listening on PORT ' + port);
 });
