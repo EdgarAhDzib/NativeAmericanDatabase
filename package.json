@@ -1,5 +1,5 @@
 {
-  "name": "nativeencyclopedia",
+  "name": "nativeamericandatabase",
   "version": "1.0.0",
   "description": "An open-source encyclopedia on Native American cultures, powered by Sequelize",
   "main": "server.js",
@@ -21,6 +21,18 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "sequelize": "^3.25.1"
+  },
+  "devDependencies": {
+    "browserify": "^13.1.0",
+    "chai": "^3.5.0",
+    "karma": "^1.3.0",
+    "karma-browserify": "^5.1.0",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-commonjs": "^1.0.0",
+    "karma-mocha": "^1.1.1",
+    "karma-mocha-reporter": "^2.1.0",
+    "mocha": "^3.0.0",
+    "watchify": "^3.7.0"
   },
   "authors": "Edgar Martin del Campo, Jason Mosley, John Nowinsky",
   "license": "ISC"
