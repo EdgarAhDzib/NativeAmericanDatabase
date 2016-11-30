@@ -18,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         // associations can be defined here
         text_contents.belongsToMany(models.media_source, {through: 'MediaContent'});
-        text_contents.hasOne(models.source_ref);
+        text_contents.hasOne(models.source_ref, { foreignKey: 'id'});
         text_contents.belongsToMany(models.user_info, {through: 'UserContent'});
         text_contents.belongsToMany(models.content_fields, {through: 'FieldContent'});
       }

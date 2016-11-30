@@ -4,6 +4,14 @@ var models  = require('../models');
 var mysql = require('mysql');
 var keys = require('../config/keys.js');
 
+//The table associations assigned through Sequelize
+models.text_contents.hasMany(models.content_fields, {foreignKey: 'content_id'});
+models.text_contents.hasMany(models.media_source, {foreignKey: 'content_id'});
+models.text_contents.hasOne(models.source_ref, {foreignKey: 'content_id'});
+models.content_fields.belongsTo(models.text_contents, {foreignKey: 'id'});
+models.media_source.belongsTo(models.text_contents, {foreignKey: 'id'});
+models.text_contents.hasOne(models.source_ref, {foreignKey: 'content_id'});
+
 // Below are the routes which will be needed by the app
 
 //Redirect the default path to /home
@@ -30,10 +38,10 @@ router.get('/authenticated', authenticatedUser, function(req,response){
 router.get('/subj/:categ', function(req, response){
 	var categ = req.params.categ;
 
-	models.text_contents.hasMany(models.content_fields, {foreignKey: 'content_id'});
-	models.text_contents.hasMany(models.media_source, {foreignKey: 'content_id'});
-	models.content_fields.belongsTo(models.text_contents, {foreignKey: 'id'});
-	models.media_source.belongsTo(models.text_contents, {foreignKey: 'id'});
+	// models.text_contents.hasMany(models.content_fields, {foreignKey: 'content_id'});
+	// models.text_contents.hasMany(models.media_source, {foreignKey: 'content_id'});
+	// models.content_fields.belongsTo(models.text_contents, {foreignKey: 'id'});
+	// models.media_source.belongsTo(models.text_contents, {foreignKey: 'id'});
 	models.text_contents.findAll( { include: [
 		{
 			model: models.content_fields, where : {ethn_id: categ}
@@ -65,6 +73,29 @@ router.get('/group/:groupname', function(req, response){
 	.then(function(results){
 		//Write this as a RETURN for Karma testing
 		var handleObj = {entry:results, isGroup:true, searchParam: true};
+		response.render('index', handleObj);
+	});
+
+});
+
+router.get('/item/:id', function(req, response){
+	var itemId = req.params.id;
+	models.text_contents.findAll( { where: {id: itemId}, include: [
+		{
+			model: models.content_fields
+		},
+		{
+			model: models.media_source
+		},
+		{
+			model: models.source_ref
+		}
+		], 
+	})
+	.then(function(results){
+		//console.log(results)
+		//Write this as a RETURN for Karma testing
+		var handleObj = {entry:results, itemPage:true};
 		response.render('index', handleObj);
 	});
 

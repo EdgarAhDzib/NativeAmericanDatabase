@@ -14,7 +14,6 @@ $('.youTube').each(function (index, value) {
 
 $('img').each(function (index,value) {
 	if ( $(this).attr('src') === "") {
-		console.log('img ' + index + "isn't here");
 		//If this element has a blank "" image source, hide it to vertically align the text with YouTube thumbnail
 		$(this).hide();
 	}
