@@ -16,7 +16,7 @@
 }
 
 .navbar-inverse .navbar-nav > li > a {
-    color: white;
+    color: red;
 }
 
 .navbar-inverse .navbar-brand {
@@ -32,4 +32,28 @@
 img.center {
     display: block;
     margin: 0 auto;
+}
+
+/* unvisited link */
+a:link {
+    color: #44643d;
+    text-decoration: none;
+}
+
+/* visited link */
+a:visited {
+    color: #44643d;
+    text-decoration: none;
+}
+
+/* mouse over link */
+a:hover {
+    color: #209c05;
+    text-decoration: none;
+}
+
+/* selected link */
+a:active {
+    color: #44643d;
+    text-decoration: none;
 }
