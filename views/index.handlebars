@@ -59,6 +59,23 @@
         </div>
     </div>
 
+{{#if showMenus}}
+	<div class="col-sm-6"><h2><a href="../cultures">Browse by Culture</a></h2></div>
+	<div class="col-sm-6"><h2><a href="../subjects">Browse by Subject</a></h2></div>
+{{/if}}
+
+{{#if cultures}}
+
+	{{> menus/cultures}}
+
+{{/if}}
+
+{{#if subjects}}
+
+	{{> menus/subjects}}
+
+{{/if}}
+
 {{#if isGroup}}
 <h2>Results for
 	{{#each entry}}

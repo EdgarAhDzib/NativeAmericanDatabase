@@ -20,11 +20,27 @@ router.get('/', function(req, response) {
 });
 
 router.get('/home', function(req, response){
-	// connection.query("SELECT * FROM text_contents", function(err, data){
-	// 	if (err) throw err;
 	models.text_contents.findAll({
 	}).then(function(data) {	
-		var handleObj = { entry: data };
+		var handleObj = { entry: data, showMenus: true };
+		response.render('index', handleObj);
+	});
+});
+
+//Show the cultures menu
+router.get('/cultures', function(req, response){
+	models.native_group.findAll({
+	}).then(function(data) {	
+		var handleObj = { entry: data, cultures: true };
+		response.render('index', handleObj);
+	});
+});
+
+//Show the subjects menu
+router.get('/subjects', function(req, response){
+	models.ethn_fields.findAll({
+	}).then(function(data) {	
+		var handleObj = { entry: data, subjects: true };
 		response.render('index', handleObj);
 	});
 });
@@ -33,15 +49,9 @@ router.get('/authenticated', authenticatedUser, function(req,response){
 	response.render('authenticated');
 });
 
-//Use Karma testing for proper case
-
 router.get('/subj/:categ', function(req, response){
 	var categ = req.params.categ;
 
-	// models.text_contents.hasMany(models.content_fields, {foreignKey: 'content_id'});
-	// models.text_contents.hasMany(models.media_source, {foreignKey: 'content_id'});
-	// models.content_fields.belongsTo(models.text_contents, {foreignKey: 'id'});
-	// models.media_source.belongsTo(models.text_contents, {foreignKey: 'id'});
 	models.text_contents.findAll( { include: [
 		{
 			model: models.content_fields, where : {ethn_id: categ}
@@ -52,7 +62,6 @@ router.get('/subj/:categ', function(req, response){
 		], 
 	})
 	.then(function(results){
-		//Write this as a RETURN for Karma testing
 		var handleObj = {entry:results, isSubj:true, searchParam: true};
 		response.render('index', handleObj);
 	});
@@ -71,7 +80,6 @@ router.get('/group/:groupname', function(req, response){
 		], 
 	})
 	.then(function(results){
-		//Write this as a RETURN for Karma testing
 		var handleObj = {entry:results, isGroup:true, searchParam: true};
 		response.render('index', handleObj);
 	});
@@ -93,13 +101,145 @@ router.get('/item/:id', function(req, response){
 		], 
 	})
 	.then(function(results){
-		//console.log(results)
-		//Write this as a RETURN for Karma testing
 		var handleObj = {entry:results, itemPage:true};
 		response.render('index', handleObj);
 	});
 
 });
+
+/*
+//Create a variable that will be associated with the models' content
+var newItem;
+
+//Insert new item to text_contents table by receiving content from the posted JSON
+router.post('/item/create/', function(response){
+	var createDate = new Date();
+	var updateDate = new Date();
+
+//Post will have options for text, photo, or video
+
+//If text:
+	models.text_contents.create({
+		//Get keys from posted JSON
+		item_title: String(),
+		group:
+		period:
+		main_desc: //If content is newly written
+		prim_doc: //If the content is from already published material
+		if_published: false //Default, published TRUE after review
+		createdAt: createDate,
+		updatedAt: updateDate,
+
+//Insert related content into associated tables
+		//For source_refs table:
+		source_ref: {
+			content_id:
+			author:
+			url:
+			contributor:
+			publication:
+			createdAt: createDate,
+			updatedAt: updateDate
+		},
+		//For content_fields table (There could be several, so this will require a loop)
+		content_fields: {
+			content_id:
+			ethn_id:
+			createdAt: createDate,
+			updatedAt: updateDate
+		},
+
+	},
+	{
+		include: [
+			models.content_fields,
+			models.source_ref
+		]
+	}
+	).then (function(item){
+		return newItem = item;
+		response.redirect('/home');
+	});
+
+
+//If photo:
+	models.text_contents.create({
+		//Get keys from posted JSON
+		item_title: String(),
+		group:
+		period:
+		main_desc: //If content is newly written
+		prim_doc: //If the content is from already published material
+		if_published: false //Default, published TRUE after review
+		createdAt: createDate,
+		updatedAt: updateDate
+
+//Insert related content into associated tables
+		//For source_refs table:
+		content_id:
+		author:
+		contributor:
+		publication:
+		createdAt: createDate,
+		updatedAt: updateDate
+
+		//For media_sources:
+		content_id:
+		img_ref_1:
+		museum:
+		createdAt: createDate,
+		updatedAt: updateDate
+
+		//For content_fields table (There could be several, so this will require a loop)
+		content_id:
+		ethn_id:
+		createdAt: createDate,
+		updatedAt: updateDate
+
+	}).then (function(){
+		response.redirect('/home');
+	});
+
+//If video:
+	models.text_contents.create({
+		//Get keys from posted JSON
+		item_title: String(),
+		group:
+		period:
+		main_desc: //If content is newly written
+		prim_doc: //If the content is from already published material
+		if_published: false //Default, published TRUE after review
+		createdAt: createDate,
+		updatedAt: updateDate
+
+//Insert related content into associated tables
+		//For source_refs table:
+		content_id:
+		author:
+		contributor:
+		publication:
+		createdAt: createDate,
+		updatedAt: updateDate
+
+		//For media_sources:
+		content_id:
+		youTube: String(),
+		museum:
+		createdAt: createDate,
+		updatedAt: updateDate
+
+		//For content_fields table (There could be several, so this will require a loop)
+		content_id:
+		ethn_id:
+		createdAt: createDate,
+		updatedAt: updateDate
+
+	}).then (function(){
+		response.redirect('/home');
+	});
+
+}); //Closes the router function
+	*/
 
 function authenticatedUser(req, response, next){
 	if(req.isAuthenticated()){
