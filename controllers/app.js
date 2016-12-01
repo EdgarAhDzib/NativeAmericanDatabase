@@ -45,6 +45,11 @@ router.get('/subjects', function(req, response){
 	});
 });
 
+router.get('/form', function(req, response){
+	var handleForm = { showForm: true };
+	response.render('index',handleForm);
+});
+
 router.get('/authenticated', authenticatedUser, function(req,response){
 	response.render('authenticated');
 });
@@ -110,14 +115,11 @@ router.get('/item/:id', function(req, response){
 /*
 //Create a variable that will be associated with the models' content
 var newItem;
-
 //Insert new item to text_contents table by receiving content from the posted JSON
 router.post('/item/create/', function(response){
 	var createDate = new Date();
 	var updateDate = new Date();
-
 //Post will have options for text, photo, or video
-
 //If text:
 	models.text_contents.create({
 		//Get keys from posted JSON
@@ -129,7 +131,6 @@ router.post('/item/create/', function(response){
 		if_published: false //Default, published TRUE after review
 		createdAt: createDate,
 		updatedAt: updateDate,
-
 //Insert related content into associated tables
 		//For source_refs table:
 		source_ref: {
@@ -148,7 +149,6 @@ router.post('/item/create/', function(response){
 			createdAt: createDate,
 			updatedAt: updateDate
 		},
-
 	},
 	{
 		include: [
@@ -160,8 +160,6 @@ router.post('/item/create/', function(response){
 		return newItem = item;
 		response.redirect('/home');
 	});
-
-
 //If photo:
 	models.text_contents.create({
 		//Get keys from posted JSON
@@ -173,7 +171,6 @@ router.post('/item/create/', function(response){
 		if_published: false //Default, published TRUE after review
 		createdAt: createDate,
 		updatedAt: updateDate
-
 //Insert related content into associated tables
 		//For source_refs table:
 		content_id:
@@ -182,24 +179,20 @@ router.post('/item/create/', function(response){
 		publication:
 		createdAt: createDate,
 		updatedAt: updateDate
-
 		//For media_sources:
 		content_id:
 		img_ref_1:
 		museum:
 		createdAt: createDate,
 		updatedAt: updateDate
-
 		//For content_fields table (There could be several, so this will require a loop)
 		content_id:
 		ethn_id:
 		createdAt: createDate,
 		updatedAt: updateDate
-
 	}).then (function(){
 		response.redirect('/home');
 	});
-
 //If video:
 	models.text_contents.create({
 		//Get keys from posted JSON
@@ -211,7 +204,6 @@ router.post('/item/create/', function(response){
 		if_published: false //Default, published TRUE after review
 		createdAt: createDate,
 		updatedAt: updateDate
-
 //Insert related content into associated tables
 		//For source_refs table:
 		content_id:
@@ -220,24 +212,20 @@ router.post('/item/create/', function(response){
 		publication:
 		createdAt: createDate,
 		updatedAt: updateDate
-
 		//For media_sources:
 		content_id:
 		youTube: String(),
 		museum:
 		createdAt: createDate,
 		updatedAt: updateDate
-
 		//For content_fields table (There could be several, so this will require a loop)
 		content_id:
 		ethn_id:
 		createdAt: createDate,
 		updatedAt: updateDate
-
 	}).then (function(){
 		response.redirect('/home');
 	});
-
 }); //Closes the router function
 	*/
 
