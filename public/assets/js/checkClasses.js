@@ -2,7 +2,7 @@ $('.queryItem').each(function (index,value) {
 	var ifImg = $(this).children('img').attr('src');
 	var ifYouTube = $(this).children('div').attr('id');
 	//If neither the img element's src or the div element's ID is a string, the result is the preview to a written note
-	if (typeof ifImg !== 'string' && typeof ifYouTube !== 'string') {
+	if (ifImg == '' && ifYouTube == '') {
 		$(this).prepend("<div width='250'><font style='font-size:300%'>Notes</font></div>");
 	}
 });
@@ -15,7 +15,7 @@ $('.preview').each(function(index,value){
 		//Add ellipses to the end of the preview sentence
 		var firstSentence = previewText.substring(0,periodPos) + "...";
 		//Insert the first sentence text into the preview text <span>
-		$(this).html("Preview:<br/>" + firstSentence);
+		$(this).html(firstSentence);
 	}
 })
 
