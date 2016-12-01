@@ -1,5 +1,5 @@
-{{!-- <div class="col-xs-12"> --}}
-{{!-- 	{{#each entry}}
+<div class="col-xs-12">
+	{{#each entry}}
 		<div>
 			<a href="../item/{{this.id}}" class="queryItem">
 				{{#each media_sources}}
@@ -13,13 +13,15 @@
 		Preview:<br/>
 		<span class="preview">{{{this.prim_doc}}}</span>
 		<br/><hr/><br/>			
-		</div> --}}
-{{!-- 		Preview:<br/>
+		</div>
+		Preview:<br/>
 		<span class="preview">{{{this.prim_doc}}}</span>
-		<br/><hr/><br/> --}}
-{{!-- 	{{/each}} --}}
-{{!-- </div> --}}
-<div class="col-xs-12 col-md-1"></div>
+		<br/><hr/><br/>
+	{{/each}}
+</div>
+
+
+{{!-- <div class="col-xs-12 col-md-1"></div>
 <div class="col-xs-12 col-md-10">
 	{{#each entry}}
 		<div class="panel panel-default">
@@ -27,24 +29,19 @@
 				<font style="font-size:200%">{{{this.item_title}}}, {{this.group}}</font>
 			</div>
 			<div class="panel-body">
-
-					{{#each media_sources}}
-						{{#if @first}}
-							<a href="../item/{{this.id}}">
-								<div class="youTube center-block" id="{{this.youtube}}"></div>
-								<img src="{{this.img_ref_1}}" class="thumbnail center-block" width="150"/>
-							</a>
-						{{/if}}
-					{{/each}}
-	
-				
-					<h3>Preview</h3>
-				
+				{{#each media_sources}}
+					{{#if @first}}
+						<a href="../item/{{this.id}}">
+							<div class="youTube center-block" id="{{this.youtube}}"></div>
+							<img src="{{this.img_ref_1}}" class="thumbnail center-block" width="150"/>
+						</a>
+					{{/if}}
+				{{/each}}
+				<h3>Preview</h3>
 				<span class="preview">{{{this.prim_doc}}}</span>
-				{{!-- <a href="../item/{{this.id}}" class="queryItem">VIEW</a> --}}
 				<h4><a href="../item/{{this.id}}">VIEW</a></h4>
 			</div>
 		</div>
 	{{/each}}
 </div>
-<div class="col-xs-12 col-md-1"></div>
+<div class="col-xs-12 col-md-1"></div> --}}
