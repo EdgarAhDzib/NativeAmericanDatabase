@@ -10,18 +10,6 @@
     position: fixed;
     z-index: -1;
 }
-.Background2 {
-    background-color: #44643d;
-    bottom: 0;
-    background-size: cover;
-    background-attachment: fixed;
-    left: 0;
-    
-    right: 0;
-    top: 0;
-    position: fixed;
-    z-index: -1;
-}
 
 .navbar-inverse {
     background: #44643d;
@@ -44,13 +32,4 @@
 img.center {
     display: block;
     margin: 0 auto;
-}
-label {
-    color: white;
-}
-.page-header {
-    color: white;
-}
-#login {
-    text-align: center;
 }
