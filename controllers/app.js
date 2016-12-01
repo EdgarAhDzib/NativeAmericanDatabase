@@ -45,6 +45,11 @@ router.get('/subjects', function(req, response){
 	});
 });
 
+router.get('/form', function(req, response){
+	var handleForm = { showForm: true };
+	response.render('index',handleForm);
+});
+
 router.get('/authenticated', authenticatedUser, function(req,response){
 	response.render('authenticated');
 });
