@@ -57,3 +57,7 @@ a:active {
     color: #44643d;
     text-decoration: none;
 }
+
+.panel-heading {
+    background: #44643d;
+}

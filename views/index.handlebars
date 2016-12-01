@@ -92,15 +92,15 @@
 {{/if}}
 
 {{#if isSubj}}
-<h2>Results for 
-	{{#each entry}}
-		{{#if @first}}
-			{{#each content_fields}}
-				'<span class="underScores">{{this.ethn_id}}</span>'
-			{{/each}}
-		{{/if}}
-	{{/each}}
-</h2>
+	<h2 class="center-block">Results for 
+		{{#each entry}}
+			{{#if @first}}
+				{{#each content_fields}}
+					'<span class="underScores">{{this.ethn_id}}</span>'
+				{{/each}}
+			{{/if}}
+		{{/each}}
+	</h2>
 {{/if}}
 
 {{#if searchParam}}
