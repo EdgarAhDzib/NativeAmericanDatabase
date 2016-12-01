@@ -58,6 +58,10 @@ label {
     background: #44643d;
 }
 #signupLogin{
+
     background-color: #44643d;
-    background-image: url(../images/kwakiutl-clan-mask.png);
+    border-radius:15px;
+    box-shadow: 10px 10px 5px grey;
+    /*background-image: url(../images/kwakiutl-clan-mask.png);*/
+    
 }
