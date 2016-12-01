@@ -1,0 +1,4 @@
+exports.key = {
+
+	password: 'homework',
+}
