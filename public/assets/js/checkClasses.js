@@ -15,7 +15,7 @@ $('.preview').each(function(index,value){
 		//Add ellipses to the end of the preview sentence
 		var firstSentence = previewText.substring(0,periodPos) + "...";
 		//Insert the first sentence text into the preview text <span>
-		$(this).html(firstSentence);
+		$(this).html("Preview:<br/>" + firstSentence);
 	}
 })
 
