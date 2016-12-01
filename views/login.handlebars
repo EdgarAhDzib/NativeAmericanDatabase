@@ -1,18 +1,47 @@
-<div class="Background2"></div>
+<div class="Background"></div>
+<nav class="navbar navbar-inverse  ">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      {{#if user}}
+        <a class="navbar-brand" href="/home">{{user.name}}</a>
+      {{else}}        
+        <a class="navbar-brand" href="/home">The Native American Database</a>
+      {{/if}}       
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/home"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;New Search</a></li>
+      {{#if user}}
+        <li><a href="/mysearches"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;My Searches</a></li>
+        <li><a href="/myarticles"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;My Articles</a></li>      
+        {{#if user.role}}
+          <li><a href="/users/drafts"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;View Drafts</a></li> 
+        {{/if}} 
+        <li><a href="/users/logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Logout</a></li>
+      {{else}}  
+        <li><a href="/users/signup"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Sign Up</a></li>
+        <li><a href="/users/login"><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Login</a></li>
+      {{/if}}
+    </ul>
+  </div>
+</nav>
 
+<div class="col-md-4"></div>
+<div id="signupLogin" class="col-md-4">
 <h2 class="page-header">Account Login</h2>
 <form method="post" action="/users/login">
   <div class="row">
-  <div class="form-group col-md-4">
+  <div class="form-group col-md-8">
     <label>Email</label>
     <input type="email" class="form-control" name="email" placeholder="Email">
   </div>
   </div>
   <div class="row">
-  <div class="form-group col-md-4">
+  <div class="form-group col-md-8">
     <label>Password</label>
     <input type="password" class="form-control" name="password" placeholder="Password">
   </div>
   </div>
   <button type="submit" class="btn btn-default">Submit</button>
 </form>
+<div class="col-md-4"></div>
+</div>
