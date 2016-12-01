@@ -65,3 +65,19 @@ label {
     /*background-image: url(../images/kwakiutl-clan-mask.png);*/
     
 }
+
+.panel-heading{
+    background-color: #44643d;
+    color:white;
+}
+#resultsHeading{
+    background-color: #44643d;
+    color:white;
+}    
+
+#resultsBody{
+    border-color:#44643d;
+    border-width: 2px;
+    border-style: solid;
+
+}

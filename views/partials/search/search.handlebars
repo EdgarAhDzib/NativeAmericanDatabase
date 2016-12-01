@@ -21,10 +21,10 @@
 <div class="col-xs-12 col-md-10">
 	{{#each entry}}
 		<div class="panel panel-default">
-			<div class="panel-heading">
+			<div id="resultsHeading" class="panel-heading">
 				<font style="font-size:200%">{{{this.item_title}}}, {{this.group}}</font>
 			</div>
-			<div class="panel-body">
+			<div id="resultsBody" class="panel-body">
 				{{#each media_sources}}
 					{{#if @first}}
 						<a href="../item/{{this.content_id}}" class="queryItem">
