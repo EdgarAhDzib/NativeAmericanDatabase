@@ -40,7 +40,7 @@ router.post('/signup', function(req, response){
 	} else {
 		var salt = bcrypt.genSaltSync(4);
 		var hashedPassword = bcrypt.hashSync(password, salt);
-		var role = 'user';
+		var role = '';
 
 		var newUser = {
 			name: name,
