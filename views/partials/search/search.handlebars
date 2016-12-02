@@ -16,28 +16,42 @@
 	{{/each}}
 </div> --}}
 
-
-<div class="col-xs-12 col-md-1"></div>
-<div class="col-xs-12 col-md-10">
-	{{#each entry}}
-		<div class="panel panel-default">
-			<div id="resultsHeading" class="panel-heading">
-				<font style="font-size:200%">{{{this.item_title}}}, {{this.group}}</font>
+<div class="row">
+	<div class="col-xs-12 col-md-1"></div>
+	<div class="col-xs-12 col-md-10">
+		{{#each entry}}
+			<div class="panel panel-default">
+				<div id="resultsHeading" class="panel-heading">
+					<font style="font-size:200%">{{{this.item_title}}}, {{this.group}}</font>
+				</div>
+				<div id="resultsBody" class="panel-body">
+					<div class="row">
+						<div class="col-xs-12">
+							<h3>Preview</h3>
+							<span class="preview">{{{this.prim_doc}}}</span>
+							{{#each media_sources}}
+								{{#if @first}}
+									<a href="../item/{{this.content_id}}" class="queryItem">
+										<div class="youTube center-block" id="{{this.youtube}}"></div>
+										<img src="{{this.img_ref_1}}" class="thumbnail center-block" width="250"/>
+									</a>
+								{{/if}}
+							{{/each}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-2">		
+							{{!-- <h4><a href="../item/{{this.id}}">VIEW PAGE</a></h4> --}}
+							<a href="../item/{{this.id}}" class="btn btn-default" role="button"><h5 class="white">VIEW PAGE</h5></a>
+						</div>
+						<div class="col-xs-12"></div>
+						<div class="col-xs-2">
+							{{!-- This will be where the user can save or delete search item from their searches --}}
+						</div>	
+					</div>	
+				</div>
 			</div>
-			<div id="resultsBody" class="panel-body">
-				{{#each media_sources}}
-					{{#if @first}}
-						<a href="../item/{{this.content_id}}" class="queryItem">
-							<div class="youTube center-block" id="{{this.youtube}}"></div>
-							<img src="{{this.img_ref_1}}" class="thumbnail center-block" width="150"/>
-						</a>
-					{{/if}}
-				{{/each}}
-				<h3>Preview</h3>
-				<span class="preview">{{{this.prim_doc}}}</span>
-				<h4><a href="../item/{{this.id}}">VIEW</a></h4>
-			</div>
-		</div>
-	{{/each}}
-</div>
-<div class="col-xs-12 col-md-1"></div>
+		{{/each}}
+	</div>
+	<div class="col-xs-12 col-md-1"></div>
+</div>	

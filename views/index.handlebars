@@ -14,9 +14,9 @@
 			{{#if user}}
 				<li><a href="/mysearches"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;My Searches</a></li>
 				<li><a href="/form"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Add Article</a></li>
-				<li><a href="/myarticles"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;My Articles</a></li>			
+				<li><a href="/myarticles"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;My Articles</a></li>			
 				{{#if user.role}}
-					<li><a href="/users/drafts"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;View Drafts</a></li>	
+					<li><a href="drafts"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;View Drafts</a></li>	
 				{{/if}}	
 				<li><a href="/users/logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Logout</a></li>
 			{{else}}	
@@ -47,8 +47,7 @@
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <!-- <h2>Custom search field</h2> -->
-                <div id="custom-search-input">
+{{!--                 <div id="custom-search-input">
                     <div class="span4"></div>
                     <div class="input-group span4">
                         <input type="text" class="form-control input-lg" placeholder="Search" />
@@ -59,17 +58,34 @@
                     </span>
                     <div class="span4"></div>
                     </div>
-                </div>
+                </div> --}}
+		        <form method="post" action="/home" role="search">
+			    	<div class="input-group">
+						<input type="text" class="form-control input-lg" placeholder="Search" name="srchterm" id="srchterm">
+						<div class="input-group-btn">
+							<button class="btn btn-default input-lg" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+						</div>
+					</div>
+				</form>                
             </div>
             <div class="col-md-3"></div>
         </div>
     </div>
 
 {{#if showMenus}}
-	<div class="col-md-2"></div>
-	<div class="col-sm-4"><h2 class="text-center"><a href="../cultures">Browse by Culture</a></h2></div>
-	<div class="col-sm-4"><h2 class="text-center"><a href="../subjects">Browse by Subject</a></h2></div>
-	<div class="col-md-2"></div>
+	<div class="row"><div class="col-xs-12"><h2></h2></div></div>
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-sm-4">
+			{{!-- <h2 class="text-center"><a href="../cultures">Browse by Culture</a></h2> --}}
+			<a href="../cultures" class="btn btn-default pull-right" role="button"><h4 class="white">Browse by Culture</h4></a>
+		</div>
+		<div class="col-sm-4">
+			{{!-- <h2 class="text-center"><a href="../subjects">Browse by Subject</a></h2> --}}
+			<a href="../subjects" class="btn btn-default pull-left" role="button"><h4 class="white">Browse by Subjects</h4></a>
+		</div>
+		<div class="col-md-2"></div>
+	</div>	
 {{/if}}
 
 {{#if showForm}}
@@ -89,17 +105,26 @@
 {{/if}}
 
 {{#if isGroup}}
-<h2>Results for
-	{{#each entry}}
-		{{#if @first}}
-			{{this.group}}
-		{{/if}}
-	{{/each}}
-</h2>
+	<div class="row"><div class="col-xs-12"><h2></h2></div></div>
+	<div class="row">
+		<div class="col-xs-12 col-md-1"></div>
+		<div class="col-xs-12 col-md-10">
+			<div id="resultsHeading" class="well">
+				<h2>Results for
+					{{#each entry}}
+						{{#if @first}}
+							{{this.group}}
+						{{/if}}
+					{{/each}}
+				</h2>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-1"></div>	
+	</div>			
 {{/if}}
 
 {{#if isSubj}}
-	<h2 class="center-block">Results for 
+{{!-- 	<h2 class="center-block">Results for 
 		{{#each entry}}
 			{{#if @first}}
 				{{#each content_fields}}
@@ -107,7 +132,25 @@
 				{{/each}}
 			{{/if}}
 		{{/each}}
-	</h2>
+	</h2> --}}
+	<div class="row"><div class="col-xs-12"><h2></h2></div></div>
+	<div class="row">
+		<div class="col-xs-12 col-md-1"></div>
+		<div class="col-xs-12 col-md-10">
+			<div id="resultsHeading" class="well img-rounded">
+				<h2 class="center-block">Results for 
+					{{#each entry}}
+						{{#if @first}}
+							{{#each content_fields}}
+								'<span class="underScores">{{this.ethn_id}}</span>'
+							{{/each}}
+						{{/if}}
+					{{/each}}
+				</h2>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-1"></div>	
+	</div>	
 {{/if}}
 
 {{#if searchParam}}
@@ -122,4 +165,46 @@
 
 	{{> search/item}}
 
+{{/if}}
+
+{{#if mySearches}}
+	<div class="row"><div class="col-xs-12"><h2></h2></div></div>
+	<div class="row">
+		<div class="col-xs-12 col-md-1"></div>
+		<div class="col-xs-12 col-md-10">
+			<div id="resultsHeading" class="well">
+				<h2>My Searches
+				</h2>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-1"></div>	
+	</div>			
+{{/if}}
+
+{{#if myArticles}}
+	<div class="row"><div class="col-xs-12"><h2></h2></div></div>
+	<div class="row">
+		<div class="col-xs-12 col-md-1"></div>
+		<div class="col-xs-12 col-md-10">
+			<div id="resultsHeading" class="well">
+				<h2>My Articles
+				</h2>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-1"></div>	
+	</div>			
+{{/if}}
+
+{{#if drafts}}
+	<div class="row"><div class="col-xs-12"><h2></h2></div></div>
+	<div class="row">
+		<div class="col-xs-12 col-md-1"></div>
+		<div class="col-xs-12 col-md-10">
+			<div id="resultsHeading" class="well">
+				<h2>Drafts
+				</h2>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-1"></div>	
+	</div>			
 {{/if}}
