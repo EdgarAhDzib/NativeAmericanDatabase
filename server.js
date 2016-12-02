@@ -75,6 +75,6 @@ var users = require('./controllers/users');
 app.use('/users', users);
 
 const PORT = process.env.PORT || 8080;
-app.listen(PORT,() => {
+app.listen(PORT, function() {
 	console.log('Listening on PORT ' + PORT);
 });
