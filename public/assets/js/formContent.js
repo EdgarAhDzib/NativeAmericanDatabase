@@ -20,14 +20,43 @@ $('.btn-primary').on('click', function () {
 });
 
 $("#submit").on("click", function(){
-	var title = $('#itemTitle').val();
-	var group = $('#groupName').val();
-	var period = $('#period').val();
-	var author = $('#author').val();
-	var notes = $('#notes').val();
-	var prim_doc = $("#prim_doc").val();
-	var url = $('#url').val();
-	var publication = $('#publication').val();
+	var title = "";
+	var group = "";
+	var period = "";
+	var author = "";
+	var notes = "";
+	var prim_doc = "";
+	var url = "";
+	var publication = "";
+
+
+	if ( typeof $('#itemTitle').val() === "string"){
+		title = $('#itemTitle').val();
+	}
+
+	if ( typeof $('#notes').val() === "string"){
+		notes = $('#notes').val();
+	}
+
+	if ( typeof $('#prim_doc').val() === "string"){
+		prim_doc = $('#prim_doc').val();
+	}
+
+	if ( typeof $('#url').val() === "string"){
+		url = $('#url').val();
+	}
+
+	if ( typeof $('#publication').val() === "string"){
+		publication = $('#publication').val();
+	}
+
+	group = $('#groupName').val();
+	period = $('#period').val();
+	author = $('#author').val();
+	notes = $('#notes').val();
+	prim_doc = $("#prim_doc").val();
+	url = $('#url').val();
+	publication = $('#publication').val();
 
 	//Get the input from all checkboxes
 	var boxVals = [];
@@ -46,9 +75,24 @@ $("#submit").on("click", function(){
 		url: url,
 		publication: publication,
 		if_published:false,
-		ethn_fields: val
+		ethn_fields: boxVals
 	};
-	
+
+/*
+router.post('/signup', function(req, response){
+var name = req.body.name;
+var email = req.body.email;
+var password = req.body.password;
+var password2 = req.body.password2;
+
+req.checkBody('name', 'Name is required').notEmpty();
+req.checkBody('email', 'Email is required').notEmpty();
+req.checkBody('email', 'Email is not valid').isEmail();
+req.checkBody('password', 'Password is required').notEmpty();
+req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
+*/
+
+	//This will require validation
 	console.log(contentObj);
 	return false;
 	/*
