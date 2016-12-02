@@ -20,20 +20,40 @@ $('.btn-primary').on('click', function () {
 });
 
 $("#submit").on("click", function(){
+	var title = $('#itemTitle').val();
+	var group = $('#groupName').val();
+	var period = $('#period').val();
+	var author = $('#author').val();
+	var notes = $('#notes').val();
+	var prim_doc = $("#prim_doc").val();
+	var url = $('#url').val();
+	var publication = $('#publication').val();
+
 	//Get the input from all checkboxes
-	//var firstVal = $("input:checkbox[name='q1']").val().trim();
-	var val = [];
-		$(':checkbox:checked').each(function(i){
-			val[i] = $(this).val();
+	var boxVals = [];
+		$('input:checkbox:checked').each(function(i){
+			var checkBoxVal = $(this).attr('id');
+			boxVals.push(checkBoxVal);
 		});
-	console.log(val);
 
 	var contentObj = {
-
+		item_title: title,
+		group_name: group,
+		period: period,
+		author: author,
+		notes: notes,
+		prim_doc: prim_doc,
+		url: url,
+		publication: publication,
+		ethn_fields: val
 	};
 	
-	$.post(currURL + "../item/create/", contentObj, function(result){
+	console.log(contentObj);
+	return false;
+	/*
+	$.post("../item/create/", contentObj, function(result){
 		console.log(result);
+		return false;
 	});
-
+	*/
 });
