@@ -20,12 +20,8 @@
     "express-handlebars": "^3.0.0",
     "express-session": "^1.14.2",
     "express-validator": "^3.0.0",
-<<<<<<< HEAD
-    "method-override": "^2.3.7",
-=======
     "keyword-extractor": "0.0.13",
     "method-override": "^2.3.6",
->>>>>>> e640b6b522366996bbec3ca3d28347ff6187d258
     "mysql": "^2.12.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",

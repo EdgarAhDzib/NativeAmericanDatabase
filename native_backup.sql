@@ -1,8 +1,10 @@
--- MySQL dump 10.13  Distrib 5.7.16, for Win64 (x86_64)
+CREATE DATABASE  IF NOT EXISTS `native_db` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
+USE `native_db`;
+-- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
--- Host: localhost    Database: native_db
+-- Host: tkck4yllxdrw0bhi.cbetxkdyhwsb.us-east-1.rds.amazonaws.com    Database: q7snum71zrg8cmuw
 -- ------------------------------------------------------
--- Server version	5.7.16-log
+-- Server version	5.7.11-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -381,7 +383,7 @@ CREATE TABLE `user_infos` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -390,7 +392,7 @@ CREATE TABLE `user_infos` (
 
 LOCK TABLES `user_infos` WRITE;
 /*!40000 ALTER TABLE `user_infos` DISABLE KEYS */;
-INSERT INTO `user_infos` VALUES (1,'Edgar Martin del Campo','edgarmdcesp@gmail.com','$2a$04$1icyx.k5Pc1WijHoaEYlguqm0x535lNe/ujMA37ASqmVd02dnnjS2',NULL,'editor',NULL,'2016-12-02 03:53:42','2016-12-02 03:53:42');
+INSERT INTO `user_infos` VALUES (1,'Edgar Martin del Campo','edgarmdcesp@gmail.com','$2a$04$1icyx.k5Pc1WijHoaEYlguqm0x535lNe/ujMA37ASqmVd02dnnjS2',NULL,'editor',NULL,'2016-12-02 03:53:42','2016-12-02 03:53:42'),(2,'Jason Mosley','jpmos10@gmail.com','$2a$04$klByPQhiJMl1M4X5GlrL4OhLeiQndB.6scuWdgGf.g21kc0tFIrXm',NULL,'user',NULL,'2016-12-02 14:41:42','2016-12-02 14:41:42');
 /*!40000 ALTER TABLE `user_infos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -459,4 +461,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-12-02  3:03:39
+-- Dump completed on 2016-12-02 15:34:08
