@@ -45,6 +45,7 @@ $("#submit").on("click", function(){
 		prim_doc: prim_doc,
 		url: url,
 		publication: publication,
+		if_published:false,
 		ethn_fields: val
 	};
 	
