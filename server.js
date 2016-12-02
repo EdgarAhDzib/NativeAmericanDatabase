@@ -74,7 +74,8 @@ app.use('/', routes);
 var users = require('./controllers/users');
 app.use('/users', users);
 
-const PORT = process.env.PORT || 3306;
-app.listen(PORT, function() {
-	console.log('Listening on PORT ' + PORT);
-});
+//const PORT = process.env.PORT || 3306;
+app.listen(process.env.PORT || 3306);
+// app.listen(PORT, function() {
+// 	console.log('Listening on PORT ' + PORT);
+// });
