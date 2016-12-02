@@ -1,18 +1,10 @@
 var mysql = require('mysql');
 var connection;
-//var keys = require('./keys.js');
-
-var jawsDB = {
-	port: '3306',
-	host: 'sulnwdk5uwjw1r2k.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-	user: 'xp5aykq1imymqn7o',
-	password: 'h7cs5fguzyq82q9h',
-	database: 'oktril0ymcyd26tt'
-};
+var keys = require('./keys.js');
 
 //if (process.env.JAWSDB_URL) {
 	//This version of the method works on Heroku
-	connection = mysql.createConnection(jawsDB);	
+	connection = mysql.createConnection(keys.jawsDB);	
 // } else {
 // 	connection = mysql.createConnection(keys.localhost);
 // }
