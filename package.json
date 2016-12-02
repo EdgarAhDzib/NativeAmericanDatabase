@@ -4,8 +4,7 @@
   "description": "An open-source encyclopedia on Native American cultures, powered by Sequelize",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "bcryptjs": "^2.3.0",
