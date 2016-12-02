@@ -61,9 +61,9 @@ label {
 
     background-color: #44643d;
     border-radius:15px;
-    box-shadow: 10px 10px 5px grey;
+    /*box-shadow: 10px 10px 5px grey;*/
     /*background-image: url(../images/kwakiutl-clan-mask.png);*/
-    
+    padding-bottom: 50px;
 }
 
 .panel-heading{
@@ -80,4 +80,26 @@ label {
     border-width: 2px;
     border-style: solid;
 
+}    
+a:link {
+    color: #44643d;
+    text-decoration: none;
+}
+
+/* visited link */
+a:visited {
+    color: #44643d;
+    text-decoration: none;
+}    
+
+}
+a:hover {
+    color: #209c05;
+    text-decoration: none;
+}
+
+/* selected link */
+a:active {
+    color: #44643d;
+    text-decoration: none;
 }
