@@ -1,6 +1,24 @@
-<div class="col-xs-12">
+{{!-- <div class="col-xs-12">
 	<h2>Browse by Subject</h2>
 	{{#each entry}}
 			<h3><a href="../subj/{{this.name}}"><span class="underScores">{{this.name}}</span></a></h3>
 	{{/each}}
+</div> --}}
+
+<div class="row"><div class="col-xs-12"><h2></h2></div></div>
+<div class="col-xs-12 col-md-1"></div>
+<div class="col-xs-12 col-md-10">
+	<div class="panel panel-default">
+		<div id="resultsHeading" class="panel-heading">
+			<h2>Browse by Subject</h2>
+		</div>
+		<div id="resultsBody" class="panel-body">
+			{{#each entry}}
+				<div class="col-xs-12 col-md-3">
+					<p><a href="../subj/{{this.name}}"><span class="underScores">{{this.name}}</span></a></p>
+				</div>
+			{{/each}}			
+		</div>
+	</div>	
 </div>
+<div class="col-xs-12 col-md-1"></div>
