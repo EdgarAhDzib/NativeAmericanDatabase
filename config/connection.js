@@ -5,7 +5,7 @@ var connection;
 var jawsDB = {
 		port: '3306',
 		host: 'tkck4yllxdrw0bhi.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-		user: 'pamv2y6gfecwynpt',
+		username: 'pamv2y6gfecwynpt',
 		password: 'u52x8imwn1yenhhj',
 		database: 'q7snum71zrg8cmuw'
 	};
