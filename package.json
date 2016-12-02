@@ -4,7 +4,8 @@
   "description": "An open-source encyclopedia on Native American cultures, powered by Sequelize",
   "main": "server.js",
   "scripts": {
-    "test": "node server.js"
+    "test": "node server.js",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -23,9 +24,7 @@
     "mysql": "^2.12.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
-    "sequelize": "^3.25.1"
-  },
-  "devDependencies": {
+    "sequelize": "^3.25.1",
     "browserify": "^13.1.0",
     "chai": "^3.5.0",
     "karma": "^1.3.0",
