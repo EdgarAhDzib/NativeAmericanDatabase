@@ -4,7 +4,11 @@
   "description": "An open-source encyclopedia on Native American cultures, powered by Sequelize",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EdgarAhDzib/nativeamericandatabase.git"
   },
   "dependencies": {
     "bcryptjs": "^2.3.0",
