@@ -47,8 +47,7 @@
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <!-- <h2>Custom search field</h2> -->
-                <div id="custom-search-input">
+{{!--                 <div id="custom-search-input">
                     <div class="span4"></div>
                     <div class="input-group span4">
                         <input type="text" class="form-control input-lg" placeholder="Search" />
@@ -59,7 +58,15 @@
                     </span>
                     <div class="span4"></div>
                     </div>
-                </div>
+                </div> --}}
+		        <form method="post" action="/home" role="search">
+			    	<div class="input-group">
+						<input type="text" class="form-control input-lg" placeholder="Search" name="srch-term" id="srch-term">
+						<div class="input-group-btn">
+							<button class="btn btn-default input-lg" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+						</div>
+					</div>
+				</form>                
             </div>
             <div class="col-md-3"></div>
         </div>
@@ -71,11 +78,11 @@
 		<div class="col-md-2"></div>
 		<div class="col-sm-4">
 			{{!-- <h2 class="text-center"><a href="../cultures">Browse by Culture</a></h2> --}}
-			<a href="../cultures" class="btn btn-default btn-lg center-block" role="button"><h3 class="white">Browse by Culture</h3></a>
+			<a href="../cultures" class="btn btn-default pull-right" role="button"><h4 class="white">Browse by Culture</h4></a>
 		</div>
 		<div class="col-sm-4">
 			{{!-- <h2 class="text-center"><a href="../subjects">Browse by Subject</a></h2> --}}
-			<a href="../subjects" class="btn btn-default btn-lg center-block" role="button"><h3 class="white">Browse by Subjects</h3></a>
+			<a href="../subjects" class="btn btn-default pull-left" role="button"><h4 class="white">Browse by Subjects</h4></a>
 		</div>
 		<div class="col-md-2"></div>
 	</div>	
