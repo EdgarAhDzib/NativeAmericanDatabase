@@ -10,13 +10,13 @@
     position: fixed;
     z-index: -1;
 }
+
 .Background2 {
     background-color: #44643d;
     bottom: 0;
     background-size: cover;
     background-attachment: fixed;
     left: 0;
-    
     right: 0;
     top: 0;
     position: fixed;
@@ -45,52 +45,60 @@ img.center {
     display: block;
     margin: 0 auto;
 }
+
 label {
     color: white;
 }
+
 .page-header {
     color: white;
 }
+
 #login {
     text-align: center;
 }
+
 #search {
     background: #44643d;
 }
-#signupLogin{
 
+#signupLogin {
     background-color: #44643d;
-    border-radius:15px;
+    border-radius: 15px;
     /*box-shadow: 10px 10px 5px grey;*/
     /*background-image: url(../images/kwakiutl-clan-mask.png);*/
     padding-bottom: 50px;
 }
 
-.panel-heading{
+.panel-heading {
     background-color: #44643d;
-    color:white;
+    color: white;
 }
-#resultsHeading{
-    background-color: #44643d;
-    color:white;
-}    
 
-#resultsBody{
-    border-color:#44643d;
+#resultsHeading {
+    background-color: #44643d;
+    color: white;
+}
+
+#resultsBody {
+    border-color: #44643d;
     border-width: 2px;
     border-style: solid;
+}
 
-}    
 a:link {
     color: #44643d;
     text-decoration: none;
 }
 
+
 /* visited link */
+
 a:visited {
     color: #44643d;
     text-decoration: none;
-}    
+}
+
 
 }
 a:hover {
@@ -102,4 +110,27 @@ a:hover {
 a:active {
     color: #44643d;
     text-decoration: none;
+}
+.btn-default {
+    color: #ffffff;
+    background-color: #44643D;
+    border-color: #44643D;
+}
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active,
+.btn-default.active,
+.open .dropdown-toggle.btn-default {
+    color: #ffffff;
+    background-color: #209C05;
+    border-color: #44643D;
+}
+.btn-default:active,
+.btn-default.active,
+.open .dropdown-toggle.btn-default {
+    background-image: none;
+}
+
+.white {
+    color: #ffffff;
 }

@@ -30,7 +30,7 @@
 			</div>
 
 		{{#each media_sources}}
-			{{#if @first}}
+{{!-- 			{{#if @first}}
 				<div class="col-md-6">
 					<img class="imgOne thumbnail center-block" src="{{this.img_ref_1}}" width="350"/>
 				</div>
@@ -44,6 +44,21 @@
 			</div>
 			<div class="col-md-6">
 				<img class="imgFour thumbnail center-block" src="{{this.img_ref_4}}" width="350"/>
+			</div> --}}
+			{{#if @first}}
+				<div class="col-md-6">
+					<img class="imgOne thumbnail center-block img-responsive" src="{{this.img_ref_1}}">
+				</div>
+			{{/if}}
+				<div class="col-md-6">
+					<img class="imgTwo thumbnail center-block img-responsive" src="{{this.img_ref_2}}">
+				</div>
+
+			<div class="col-md-6">
+				<img class="imgThree thumbnail center-block img-responsive" src="{{this.img_ref_3}}">
+			</div>
+			<div class="col-md-6">
+				<img class="imgFour thumbnail center-block img-responsive" src="{{this.img_ref_4}}">
 			</div>
 		{{/each}}
 
@@ -59,7 +74,8 @@
 				<span class="contribSpan">Contributor: {{source_ref.contributor}}</span><br/>
 				<span class="pubSpan">Publication: {{source_ref.publication}}</span><br/>
 				<h4>
-					<a href="{{source_ref.url}}" target="_blank">Link to original source</a>
+					{{!-- <a href="{{source_ref.url}}" target="_blank">Link to original source</a> --}}
+					<a href="{{source_ref.url}}" target="_blank" class="btn btn-default" role="button"><h5 class="white">VIEW ORIGINAL SOURCE</h5></a>
 				</h4>	
 			</h4>
 		</div>
