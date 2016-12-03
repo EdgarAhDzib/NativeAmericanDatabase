@@ -33,7 +33,7 @@ router.get('/home', function(req, response) {
     });
 });
 
-router.post('/home', function(req, response) {
+router.post('/search', function(req, response) {
     var searchTerm = keyword_extractor.extract(req.body.srchterm, {
         language: "english",
         language: "spanish",
@@ -45,7 +45,7 @@ router.post('/home', function(req, response) {
     connection.query(searchQuery, function(err,results){
     	// if(err) throw err;
     	console.log('SEARCH QUERY '+searchQuery);
-    		var handleObj = { entry: results, searchParam: true};
+    		var handleObj = { entry: results, searchValue: searchTerm, searchResults: true, searchParam: true};
     		response.render('index', handleObj);
     })
 });
