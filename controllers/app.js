@@ -36,11 +36,12 @@ router.get('/home', function(req, response) {
 router.post('/search', function(req, response) {
     var searchTerm = keyword_extractor.extract(req.body.srchterm, {
         language: "english",
-        language: "spanish",
+        // language: "spanish",
         remove_digits: true,
         return_changed_case: true,
         remove_duplicates: false
     });
+    console.log("SEARCHTERM "+searchTerm);
     searchQuery = "SELECT * FROM text_contents WHERE MATCH (text_contents.item_title,text_contents.main_desc,text_contents.prim_doc) AGAINST('"+searchTerm+"')";
     connection.query(searchQuery, function(err,results){
     	// if(err) throw err;
