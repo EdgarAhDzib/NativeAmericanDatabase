@@ -3,12 +3,18 @@
 
 	<div class="container-fluid">
 		<div class="navbar-header">
+<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span> 
+      </button>
 			{{#if user}}
 				<a class="navbar-brand" href="/home">{{user.name}}</a>
 			{{else}}				
 				<a class="navbar-brand" href="/home">The Native American Database</a>
 			{{/if}}				
 		</div>
+		<div class="collapse navbar-collapse" id="myNavbar">
 		<ul class="nav navbar-nav navbar-right">
 			<li><a href="/home"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;New Search</a></li>
 			{{#if user}}
@@ -23,6 +29,7 @@
 				<li><a href="/users/login"><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Login</a></li>
 			{{/if}}
 		</ul>
+		</div>	
 	</div>
 </nav>
 <br><br>
