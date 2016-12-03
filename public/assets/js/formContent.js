@@ -1,9 +1,11 @@
+var mediaID;
+
 $('.btn-primary').on('click', function () {
 	$('.btn-success').removeClass('btn-success');
 	$('button').addClass('btn-primary');
 	$(this).removeClass('btn-primary');
 	$(this).addClass('btn-success');
-	var mediaID = $(this).attr('id');
+	mediaID = $(this).attr('id');
 	var mediaDiv;
 	switch (mediaID) {
 		case "textButton":
@@ -28,77 +30,84 @@ $("#submit").on("click", function(){
 	var prim_doc = "";
 	var url = "";
 	var publication = "";
+	var main_desc = "";
 
+	//Process only if one of the media option buttons is clicked
+	if (mediaID === "textButton" || mediaID === "vidButton" || mediaID === "picButton") {
 
-	if ( typeof $('#itemTitle').val() === "string"){
-		title = $('#itemTitle').val();
-	}
+		if ( typeof $('#itemTitle').val() === "string"){
+			title = $('#itemTitle').val().trim();
+		}
 
-	if ( typeof $('#notes').val() === "string"){
-		notes = $('#notes').val();
-	}
+		if ( typeof $('#groupName').val() === "string"){
+			group = $('#groupName').val().trim();
+		}
 
-	if ( typeof $('#prim_doc').val() === "string"){
-		prim_doc = $('#prim_doc').val();
-	}
+		if ( typeof $('#period').val() === "string"){
+			period = $('#period').val().trim();
+		}
 
-	if ( typeof $('#url').val() === "string"){
-		url = $('#url').val();
-	}
+		if ( typeof $('#author').val() === "string"){
+			author = $('#author').val().trim();
+		}
 
-	if ( typeof $('#publication').val() === "string"){
-		publication = $('#publication').val();
-	}
+		if ( typeof $('#notes').val() === "string"){
+			notes = $('#notes').val().trim();
+		}
 
-	group = $('#groupName').val();
-	period = $('#period').val();
-	author = $('#author').val();
-	notes = $('#notes').val();
-	prim_doc = $("#prim_doc").val();
-	url = $('#url').val();
-	publication = $('#publication').val();
+		if ( typeof $('#prim_doc').val() === "string"){
+			prim_doc = $('#prim_doc').val().trim();
+		}
 
-	//Get the input from all checkboxes
-	var boxVals = [];
-		$('input:checkbox:checked').each(function(i){
-			var checkBoxVal = $(this).attr('id');
-			boxVals.push(checkBoxVal);
-		});
+		if ( typeof $('#url').val() === "string"){
+			url = $('#url').val().trim();
+		}
 
-	var contentObj = {
-		item_title: title,
-		group_name: group,
-		period: period,
-		author: author,
-		notes: notes,
-		prim_doc: prim_doc,
-		url: url,
-		publication: publication,
-		if_published:false,
-		ethn_fields: boxVals
-	};
+		if ( typeof $('#publication').val() === "string"){
+			publication = $('#publication').val().trim();
+		}
 
-/*
-router.post('/signup', function(req, response){
-var name = req.body.name;
-var email = req.body.email;
-var password = req.body.password;
-var password2 = req.body.password2;
+		if ( typeof $('#main_desc').val() === "string"){
+			main_desc = $('#main_desc').val().trim();
+		}
 
-req.checkBody('name', 'Name is required').notEmpty();
-req.checkBody('email', 'Email is required').notEmpty();
-req.checkBody('email', 'Email is not valid').isEmail();
-req.checkBody('password', 'Password is required').notEmpty();
-req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
-*/
+		//Get the input from all checkboxes
+		var boxVals = [];
+			$('input:checkbox:checked').each(function(i){
+				var checkBoxVal = $(this).attr('id');
+				boxVals.push(checkBoxVal);
+			});
 
-	//This will require validation
-	console.log(contentObj);
-	return false;
+		var contentObj = {
+			media_type: mediaID,
+			item_title: title,
+			group_name: group,
+			period: period,
+			author: author,
+			notes: notes,
+			prim_doc: prim_doc,
+			url: url,
+			publication: publication,
+			main_desc: main_desc,
+			ethn_fields: boxVals
+		};
+
 	/*
-	$.post("../item/create/", contentObj, function(result){
-		console.log(result);
-		return false;
-	});
+	router.post('/signup', function(req, response){
+	var name = req.body.name;
+	var email = req.body.email;
+	var password = req.body.password;
+	var password2 = req.body.password2;
+
+	req.checkBody('name', 'Name is required').notEmpty();
+	req.checkBody('email', 'Email is required').notEmpty();
+	req.checkBody('email', 'Email is not valid').isEmail();
+	req.checkBody('password', 'Password is required').notEmpty();
+	req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 	*/
+
+		//This will require validation
+		$.post("../item/create/", contentObj, function(){
+		});
+	}
 });
