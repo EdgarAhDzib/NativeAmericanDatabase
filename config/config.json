@@ -1,0 +1,24 @@
+{
+  "development": {
+    "username": "root",
+    "password": "El3ctro-K@tie",
+    "database": "native_db",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "port": "3306",
+    "host": "tkck4yllxdrw0bhi.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    "username": "pamv2y6gfecwynpt",
+    "password": "u52x8imwn1yenhhj",
+    "database": "q7snum71zrg8cmuw",
+    "dialect": "mysql"
+  }
+}
