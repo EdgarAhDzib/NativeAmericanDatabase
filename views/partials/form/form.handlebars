@@ -1,12 +1,17 @@
 {{#if user}}
-<div>
+<br/><br/>
+<div class="col-md-3"></div>
+<div id="formInput" class="col-md-6">
+	<div class="col-md-12">
+
 	<h2>Entry type:</h2>
-	<button class="btn btn-primary" id="textButton">Notes</button> <button class="btn btn-primary" id="vidButton">Video</button> <button class="btn btn-primary" id="picButton">Picture</button>
+	
+	<button class="btn btn-default" id="textButton">Notes</button> <button class="btn btn-default" id="vidButton">Video</button> <button class="btn btn-default" id="picButton">Picture</button><br><br>
 	<form id="itemContents">
-		Title: <input type="text" id="itemTitle"><br/>
-		Culture: <input type="text" id="groupName"><br/>
-		Period: <input type="text" id="period"><br/>
-		Author: <input type="text" id="author"><br/>
+		Title:<input type="text" id="itemTitle"><br/><br/>
+		Culture: <input type="text" id="groupName"><br/><br/>
+		Period: <input type="text" id="period"><br/><br/>
+		Author: <input type="text" id="author"><br/><br/>
 		Contributor (Will be retrieved from logged in user)
 		<div id="mediaType">
 		</div>
@@ -28,7 +33,9 @@
 		<h4>Responses to Modernization and Globalization</h4>
 		mission <input type="checkbox" id="mission">
 		<br/><br/>
-		<button type="submit" id="submit">Submit</button>
+		<button class="btn btn-default" type="submit" id="submit">Submit</button>
 	</form>
+	</div>
 </div>
+<div class="col-md-3"></div>
 {{/if}}

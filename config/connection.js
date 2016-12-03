@@ -4,7 +4,7 @@ var keys = require('./keys.js');
 
 //if (process.env.JAWSDB_URL) {
 	//This version of the method works on Heroku
-	connection = mysql.createConnection(keys.jawsDB);	
+	connection = mysql.createConnection(keys.localhost);	
 // } else {
 // 	connection = mysql.createConnection(keys.localhost);
 // }

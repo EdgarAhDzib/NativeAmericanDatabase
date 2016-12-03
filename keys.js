@@ -1,4 +1,0 @@
-exports.key = {
-
-	password: 'homework',
-}

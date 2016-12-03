@@ -134,3 +134,30 @@ a:active {
 .white {
     color: #ffffff;
 }
+#formInput {
+    background-color: #44643d;
+    border-radius: 15px;
+    /*box-shadow: 10px 10px 5px grey;*/
+    /*background-image: url(../images/kwakiutl-clan-mask.png);*/
+    padding-bottom: 50px;
+    color:white;
+    margin-left: 16px;
+    text-align: center;
+
+}
+#textButton {
+    background-color: white;
+    color: #44643d;
+}
+#vidButton {
+    background-color: white;
+    color: #44643d;
+}
+#picButton {
+    background-color: white;
+    color: #44643d;
+}
+#submit {
+    background-color: white;
+    color: #44643d;
+}
