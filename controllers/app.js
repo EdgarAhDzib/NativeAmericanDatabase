@@ -155,7 +155,9 @@ var newItem;
 
 var reqFields = [];
 
+//Initialize variables that will be assigned through the query
 var userName = "";
+var currId;
 
 //Insert new item to text_contents table by receiving content from the posted JSON
 router.post('/item/create/', function(req, response){
@@ -172,6 +174,7 @@ router.post('/item/create/', function(req, response){
 	var reqUrl = req.body.url;
 	var reqPublication = req.body.publication;
 	var reqMainDesc = req.body.main_desc;
+	var reqYouTube = req.body.youTube;
 
 	if (req.body['ethn_fields[]']) {
 		for (i=0; i<req.body['ethn_fields[]'].length; i++) {
@@ -239,12 +242,44 @@ router.post('/item/create/', function(req, response){
 
 		} // Closes the textButton condition
 		else if (reqMedia === "vidButton") {
-			
+			models.text_contents.create({
+
+				//Get keys from posted object
+				item_title: reqTitle,
+				group: reqGroup,
+				period: reqPeriod,
+				main_desc: reqMainDesc, //If content is newly written
+				if_published: true, //Default, published TRUE after review
+				createdAt: createDate,
+				updatedAt: updateDate,
+				
+				//For the source_refs table
+				source_ref: {
+					author: reqAuthor,
+					url: reqUrl,
+					contributor: userName,
+					publication: reqPublication
+				}
+			},
+			{
+				//INCLUDE MODELS
+				include: [models.source_ref]
+			}
+			)
+			.then (function(item){
+				newItem = item;
+				currId = newItem.id;
+				response.redirect('/home');
+			})
+			.then (function(){
+				models.media_source.create({
+					content_id: currId,
+					youtube: reqYouTube
+				})
+			});
 
 		} // Closes the vidButton condition
 
-				//For the media_sources table
-				//youtube: [GET FROM url if it's YouTube]
 	});
 }); //Closes the router function
 

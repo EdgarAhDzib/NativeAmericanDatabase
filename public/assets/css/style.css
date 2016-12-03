@@ -111,6 +111,7 @@ a:active {
     color: #44643d;
     text-decoration: none;
 }
+
 .btn-default {
     color: #ffffff;
     background-color: #44643D;
@@ -130,16 +131,16 @@ a:active {
 .open .dropdown-toggle.btn-default {
     background-image: none;
 }
-
 .white {
     color: #ffffff;
 }
+/*
 #formInput {
     background-color: #44643d;
     border-radius: 15px;
     /*box-shadow: 10px 10px 5px grey;*/
     /*background-image: url(../images/kwakiutl-clan-mask.png);*/
-    padding-bottom: 50px;
+ /*   padding-bottom: 50px;
     color:white;
     margin-left: 16px;
     text-align: center;
@@ -157,6 +158,7 @@ a:active {
     background-color: white;
     color: #44643d;
 }
+*/
 #submit {
     background-color: white;
     color: #44643d;

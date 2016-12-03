@@ -6,6 +6,7 @@ $('.btn-primary').on('click', function () {
 	$(this).removeClass('btn-primary');
 	$(this).addClass('btn-success');
 	mediaID = $(this).attr('id');
+
 	var mediaDiv;
 	switch (mediaID) {
 		case "textButton":
@@ -31,6 +32,7 @@ $("#submit").on("click", function(){
 	var url = "";
 	var publication = "";
 	var main_desc = "";
+	var ytCode = "";
 
 	//Process only if one of the media option buttons is clicked
 	if (mediaID === "textButton" || mediaID === "vidButton" || mediaID === "picButton") {
@@ -61,6 +63,24 @@ $("#submit").on("click", function(){
 
 		if ( typeof $('#url').val() === "string"){
 			url = $('#url').val().trim();
+
+			if (url.length > 32) {
+				//check that the URL has a YouTube address
+				var ifYouTube = url.substring(12,19)
+				var ytLowerC = ifYouTube.toLowerCase();
+
+				//Get the code from the final characters of the URL if its domain is 'youtube' (lower case)
+				if (ytLowerC === "youtube") {
+					var ytString = url.substring(32);
+					var strLen = ytString.length;
+					if (strLen !== 11) {
+						throw new Error ('Something went wrong with your YouTube link. Please check the original URL.');
+						} else {
+						ytCode = ytString;
+					}
+				}
+			}
+
 		}
 
 		if ( typeof $('#publication').val() === "string"){
@@ -89,25 +109,13 @@ $("#submit").on("click", function(){
 			url: url,
 			publication: publication,
 			main_desc: main_desc,
-			ethn_fields: boxVals
+			ethn_fields: boxVals,
+			youTube: ytCode
 		};
-
-	/*
-	router.post('/signup', function(req, response){
-	var name = req.body.name;
-	var email = req.body.email;
-	var password = req.body.password;
-	var password2 = req.body.password2;
-
-	req.checkBody('name', 'Name is required').notEmpty();
-	req.checkBody('email', 'Email is required').notEmpty();
-	req.checkBody('email', 'Email is not valid').isEmail();
-	req.checkBody('password', 'Password is required').notEmpty();
-	req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
-	*/
 
 		//This will require validation
 		$.post("../item/create/", contentObj, function(){
 		});
+
 	}
 });
