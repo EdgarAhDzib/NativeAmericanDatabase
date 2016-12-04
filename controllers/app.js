@@ -161,6 +161,7 @@ var currId;
 
 //Insert new item to text_contents table by receiving content from the posted JSON
 router.post('/item/create/', function(req, response){
+
 	var createDate = new Date();
 	var updateDate = new Date();
 
@@ -225,7 +226,7 @@ router.post('/item/create/', function(req, response){
 			/*
 			//Add the associations for content_fields
 			.then(function(){
-				
+				//This will probably work better by looping through a basic SQL INSERT query
 				models.content_fields.create({
 					//ethn_id: [EACH reqFields value]
 				})
@@ -279,7 +280,9 @@ router.post('/item/create/', function(req, response){
 			});
 
 		} // Closes the vidButton condition
-
+		else if (reqMedia === "picButton") {
+			console.log(req.body);
+		}
 	});
 }); //Closes the router function
 

@@ -1,4 +1,28 @@
 var mediaID;
+var imgToBase64;
+
+$('#imageInput').hide();
+
+function fileToURL(cb) {
+	return function(){
+		var file = this.files[0];
+		var reader  = new FileReader();
+		reader.onloadend = function () {
+			cb(reader.result,false);
+		}
+		reader.readAsDataURL(file);
+	}
+}
+
+$('#fileConvert').change(fileToURL(function(base64Img){
+	imgToBase64 = base64Img;
+	console.log(imgToBase64);
+	//Create new column in media_sources for `image_b64`
+	//Post as value in the Article object
+	//Insert into image_b64, get user.id from request
+	$('.output').find('img').attr('src', imgToBase64);
+	$('#thumbRev').html('<h4>Review image:</h4>')
+}));
 
 $('.btn-primary').on('click', function () {
 	$('.btn-success').removeClass('btn-success');
@@ -8,15 +32,22 @@ $('.btn-primary').on('click', function () {
 	mediaID = $(this).attr('id');
 
 	var mediaDiv;
+	var imageButton;
 	switch (mediaID) {
 		case "textButton":
 		mediaDiv = "<div>Notes:<br/><textarea id='notes' rows='10' cols='80'></textarea><br/>Or original document:<br/><textarea id='prim_doc' rows='10' cols='80'></textarea><br/>URL: <input type='text' id='url' /><br/>Publication: <input type='text' id='publication' /><br/></div>"
+		$('#imageInput').hide();
+		$('#preview').hide();
 		break;
 		case "vidButton":
 		mediaDiv = "<div>Description:<br/><textarea id='main_desc' rows='10' cols='80'></textarea><br/>URL (Please include full URL for YouTube videos): <input type='text' id='url' /><br/>Publication: <input type='text' id='publication' /><br/></div>"
+		$('#imageInput').hide();
+		$('#preview').hide();
 		break;
 		case "picButton":
-		mediaDiv = "<div></div>"
+		mediaDiv = "<div>Description:<br/><textarea id='main_desc' rows='10' cols='80'></textarea><br/><div id='thumbRev'></div></div>"
+		$('#imageInput').show();
+		$('#preview').show();
 		break;
 	}
 	$("#mediaType").html(mediaDiv);
@@ -110,7 +141,8 @@ $("#submit").on("click", function(){
 			publication: publication,
 			main_desc: main_desc,
 			ethn_fields: boxVals,
-			youTube: ytCode
+			youTube: ytCode,
+			imgToBase64: imgToBase64
 		};
 
 		//This will require validation

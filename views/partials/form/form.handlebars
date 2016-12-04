@@ -7,12 +7,18 @@
 	<h2>Entry type:</h2>
 	
 	<button class="btn btn-primary" id="textButton">Notes</button> <button class="btn btn-primary" id="vidButton">Video</button> <button class="btn btn-primary" id="picButton">Picture</button><br><br>
+	<form class="input-group" id="imageInput">
+		Image Upload: <input id='fileConvert' type='file' onchange='fileToURL();'/>
+	</form>
 	<form id="itemContents">
 		Title:<input type="text" id="itemTitle"><br/><br/>
 		Culture: <input type="text" id="groupName"><br/><br/>
 		Period: <input type="text" id="period"><br/><br/>
 		Author: <input type="text" id="author"><br/><br/>
 		<div id="mediaType">
+		</div>
+		<div class="output">
+			<img class='thumbnail center-block img-responsive' id='preview'/><br/>
 		</div>
 		<h3>Subjects (select all that apply)</h3>
 		<h4>Materials</h4>

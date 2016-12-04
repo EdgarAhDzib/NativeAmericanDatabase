@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<h2>Submit image</h2>  
+<form class="input-group" id="imgTo64">
+	<input id="fileConvert" type="file" onchange="fileToURL();" />
+</form>
+			
+<hr>
+	
+<h2>Base-64 URL</h2>
+<div class="output">
+	<img><br>
+</div>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+//http://jsfiddle.net/handtrix/xztfbx1m/
+function fileToURL(cb) {
+	return function(){
+		var file = this.files[0];
+		var reader  = new FileReader();
+		reader.onloadend = function () {
+			cb(reader.result);
+		}
+		reader.readAsDataURL(file);
+	}
+}
+
+$('#fileConvert').change(fileToURL(function(base64Img){
+	console.log(base64Img);
+	//The base64Img value will be applied to the src attribute
+	//Create new column in media_sources for `image_b64`
+	//Post as value in the Article object
+	//Insert into image_b64, get user.id from request
+		$('.output')
+		// .find('textarea').val(base64Img)
+		// 	.end()
+		// .find('a').attr('href', base64Img).text(base64Img)
+		// 	.end()
+		.find('img').attr('src', base64Img);
+	})
+);
+/*
+from the "output" DIV
+<!--><textarea class="form-control" rows="40" cols="180"></textarea><br>
+<a></a><br><br><-->
+*/
+
+</script>
+</body>
+</html>
