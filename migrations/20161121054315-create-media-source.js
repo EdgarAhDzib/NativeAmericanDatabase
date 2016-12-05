@@ -14,6 +14,10 @@ module.exports = {
       youtube: {
         type: Sequelize.STRING
       },
+      image_b64: {
+        type: Sequelize.LONGTEXT,
+        allowNull: true
+      },
       img_ref_1: {
         type: Sequelize.STRING
       },

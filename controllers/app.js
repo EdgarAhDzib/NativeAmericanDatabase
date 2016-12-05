@@ -34,6 +34,8 @@ router.get('/home', function(req, response) {
 });
 
 router.post('/search', function(req, response) {
+	/*
+	//Under review, this is apparently crashing the Heroku server with timeout errors
     var searchTerm = keyword_extractor.extract(req.body.srchterm, {
         language: "english",
         // language: "spanish",
@@ -41,6 +43,8 @@ router.post('/search', function(req, response) {
         return_changed_case: true,
         remove_duplicates: false
     });
+    */
+    var searchTerm = req.body.srchterm;
     console.log("SEARCHTERM "+searchTerm);
     searchQuery = "SELECT * FROM text_contents WHERE MATCH (text_contents.item_title,text_contents.main_desc,text_contents.prim_doc) AGAINST('"+searchTerm+"')";
     connection.query(searchQuery, function(err,results){
@@ -176,6 +180,7 @@ router.post('/item/create/', function(req, response){
 	var reqPublication = req.body.publication;
 	var reqMainDesc = req.body.main_desc;
 	var reqYouTube = req.body.youTube;
+	var reqImgBlob = req.body.imgToBase64;
 
 	if (req.body['ethn_fields[]']) {
 		for (i=0; i<req.body['ethn_fields[]'].length; i++) {
@@ -250,7 +255,7 @@ router.post('/item/create/', function(req, response){
 				group: reqGroup,
 				period: reqPeriod,
 				main_desc: reqMainDesc, //If content is newly written
-				if_published: true, //Default, published TRUE after review
+				if_published: false, //Default, published TRUE after review
 				createdAt: createDate,
 				updatedAt: updateDate,
 				
@@ -280,9 +285,45 @@ router.post('/item/create/', function(req, response){
 			});
 
 		} // Closes the vidButton condition
+
 		else if (reqMedia === "picButton") {
 			console.log(req.body);
-		}
+			models.text_contents.create({
+
+				//Get keys from posted object
+				item_title: reqTitle,
+				group: reqGroup,
+				period: reqPeriod,
+				main_desc: reqMainDesc, //If content is newly written
+				if_published: false, //Default, published TRUE after review
+				createdAt: createDate,
+				updatedAt: updateDate,
+				
+				//For the source_refs table
+				source_ref: {
+					author: reqAuthor,
+					url: reqUrl,
+					contributor: userName,
+					publication: reqPublication
+				}
+			},
+			{
+				//INCLUDE MODELS
+				include: [models.source_ref]
+			}
+			)
+			.then (function(item){
+				newItem = item;
+				currId = newItem.id;
+				response.redirect('/home');
+			})
+			.then (function(){
+				models.media_source.create({
+					content_id: currId,
+					image_b64: reqImgBlob
+				})
+			});
+		} //closes the image condition
 	});
 }); //Closes the router function
 
