@@ -46,13 +46,15 @@ router.post('/search', function(req, response) {
     */
     var searchTerm = req.body.srchterm;
     console.log("SEARCHTERM "+searchTerm);
-    searchQuery = "SELECT * FROM text_contents WHERE MATCH (text_contents.item_title,text_contents.main_desc,text_contents.prim_doc) AGAINST('"+searchTerm+"')";
+    searchQuery = "SELECT * FROM text_contents WHERE MATCH (item_title,main_desc,prim_doc) AGAINST('"+searchTerm+"')";
     connection.query(searchQuery, function(err,results){
     	// if(err) throw err;
+    	/*
     	for (i=0; i<results.length; i++){
     		console.log(results[i].id);
     		console.log(results[i].item_title);
     	}
+    	*/
     	console.log('SEARCH QUERY '+searchQuery);
     		var handleObj = { entry: results, searchValue: searchTerm, searchResults: true, searchParam: true};
     		response.render('index', handleObj);

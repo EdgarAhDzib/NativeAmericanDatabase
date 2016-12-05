@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       image_b64: {
-        type: Sequelize.LONGTEXT,
+        type: Sequelize.TEXT,
         allowNull: true
       },
       img_ref_1: {
