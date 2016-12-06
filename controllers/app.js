@@ -159,14 +159,14 @@ router.get('/item/:id', function(req, response) {
 //Create a variable that will be associated with the models' content
 var newItem;
 
-var reqFields = [];
-
 //Initialize variables that will be assigned through the query
 var userName = "";
 var currId;
 
 //Insert new item to text_contents table by receiving content from the posted JSON
 router.post('/item/create/', function(req, response){
+
+	var reqFields = [];
 
 	var createDate = new Date();
 	var updateDate = new Date();
@@ -228,21 +228,21 @@ router.post('/item/create/', function(req, response){
 			)
 			.then (function(item){
 				newItem = item;
+				currId = newItem.id;
 				response.redirect('/home');
-			});
-			/*
+			})
+
 			//Add the associations for content_fields
 			.then(function(){
-				//This will probably work better by looping through a basic SQL INSERT query
-				models.content_fields.create({
-					//ethn_id: [EACH reqFields value]
-				})
-				.then(function(fields){
-					fields.addText_contents([newItem]);
-				});
+
+				//Loop the subjects from the array through SQL INSERT query
+				for (i=0; i<reqFields.length; i++) {
+					connection.query("INSERT INTO content_fields (`content_id`, `ethn_id`, `createdAt`, `updatedAt`) VALUES (?,?,?,?)", [currId, reqFields[i], createDate, updateDate], function(err){
+						if (err) throw err;
+					});
+				}
 
 			});
-			*/
 
 	/*
 	text_contents.belongsToMany(models.content_fields, {through: 'FieldContent'});
@@ -284,6 +284,18 @@ router.post('/item/create/', function(req, response){
 					content_id: currId,
 					youtube: reqYouTube
 				})
+			})
+
+			//Add the associations for content_fields
+			.then(function(){
+
+				//Loop the subjects from the array through SQL INSERT query
+				for (i=0; i<reqFields.length; i++) {
+					connection.query("INSERT INTO content_fields (`content_id`, `ethn_id`, `createdAt`, `updatedAt`) VALUES (?,?,?,?)", [currId, reqFields[i], createDate, updateDate], function(err){
+						if (err) throw err;
+					});
+				}
+
 			});
 
 		} // Closes the vidButton condition
@@ -324,6 +336,18 @@ router.post('/item/create/', function(req, response){
 					content_id: currId,
 					image_b64: reqImgBlob
 				})
+			})
+
+			//Add the associations for content_fields
+			.then(function(){
+
+				//Loop the subjects from the array through SQL INSERT query
+				for (i=0; i<reqFields.length; i++) {
+					connection.query("INSERT INTO content_fields (`content_id`, `ethn_id`, `createdAt`, `updatedAt`) VALUES (?,?,?,?)", [currId, reqFields[i], createDate, updateDate], function(err){
+						if (err) throw err;
+					});
+				}
+
 			});
 		} //closes the image condition
 	});
