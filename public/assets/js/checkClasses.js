@@ -52,6 +52,7 @@ $('.ifAltName').each(function (index, value) {
 $('.underScores').each(function (index, value) {
 	if ( $(this).val('') !== "") {
 		var cleanUp = $(this).text().replace(/_/g," ");
-		$(this).text(cleanUp);
+		var toCaps = cleanUp.toUpperCase();
+		$(this).text(toCaps);
 	}
 });

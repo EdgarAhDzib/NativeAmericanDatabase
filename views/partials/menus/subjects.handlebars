@@ -13,11 +13,28 @@
 			<h2>Browse by Subject</h2>
 		</div>
 		<div id="resultsBody" class="panel-body">
-			{{#each entry}}
-				<div class="col-xs-12 col-md-3">
-					<p><a href="../subj/{{this.name}}"><span class="underScores">{{this.name}}</span></a></p>
+			{{#if tree}}
+
+				<ul>
+					{{#each topic}}
+						<br/>
+						<div>
+							<div class="underScores hideList">{{this}}</div>
+							<ul class="mainEthn hideList" id="{{this}}"></ul>
+						<div>
+					{{/each}}
+				</ul>
+				<div id="allSubjs">
+					{{allSubjs}}
 				</div>
-			{{/each}}			
+
+			{{else}}
+				{{#each entry}}
+					<div class="col-xs-12 col-md-3">
+						<p><a href="../subj/{{this}}"><span class="underScores">{{this}}</span></a></p>
+					</div>
+				{{/each}}
+			{{/if}}			
 		</div>
 	</div>	
 </div>

@@ -84,10 +84,41 @@ router.get('/cultures', function(req, response) {
     });
 });
 
-//Show the subjects menu
+//Show the subjects menu by tree
+router.get('/subjects/tree', function(req, response) {
+    models.ethn_fields.findAll({}).then(function(data) {
+    	var topicsArr = [];
+    	var subTopsArr = [];
+
+    	//Initialize a full object array that relates each subject with its main and sub-topics
+    	var fullSubjArr = [];
+
+    	for (i=0; i<data.length; i++) {
+    		//Loops through data and pushes new value into the arrays if it doesn't already exist
+    		if (topicsArr.indexOf(data[i].main_topic) === -1){
+    			topicsArr.push(data[i].main_topic);
+    		}
+    		if (subTopsArr.indexOf(data[i].subtopic) === -1 && data[i].subtopic != "" && data[i].subtopic !== null){
+    			subTopsArr.push(data[i].subtopic);
+    		}
+    		fullSubjArr.push({main_topic:data[i].main_topic, subtopic: data[i].subtopic, subject: data[i].name});
+    	}
+    	topicsArr.sort();
+    	var subjsString = JSON.stringify(fullSubjArr);
+        var handleObj = { topic: topicsArr, allSubjs: subjsString, tree:true, subjects: true };
+        response.render('index', handleObj);
+    });
+});
+
+//Show the subjects menu by alphabet
 router.get('/subjects', function(req, response) {
     models.ethn_fields.findAll({}).then(function(data) {
-        var handleObj = { entry: data, subjects: true };
+    	var namesArr = [];
+    	for (i=0; i<data.length; i++) {
+    		namesArr.push(data[i].name);
+    	}
+    	namesArr.sort();
+        var handleObj = { entry: namesArr, tree:false, subjects: true };
         response.render('index', handleObj);
     });
 });
