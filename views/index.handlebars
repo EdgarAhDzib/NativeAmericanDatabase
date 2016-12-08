@@ -11,7 +11,7 @@
 			{{#if user}}
 				<a class="navbar-brand" href="/home">{{user.name}}</a>
 			{{else}}				
-				<a class="navbar-brand" href="/home">The Native American Database</a>
+				<a class="navbar-brand" href="/home">The Native American Cultures Database</a>
 			{{/if}}				
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
@@ -221,4 +221,10 @@
 		</div>
 		<div class="col-xs-12 col-md-1"></div>	
 	</div>			
+{{/if}}
+
+{{#if about}}
+
+	{{> about/about}}
+
 {{/if}}

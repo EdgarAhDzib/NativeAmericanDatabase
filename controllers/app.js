@@ -64,17 +64,22 @@ router.post('/search', function(req, response) {
 router.get('/mysearches', authenticatedUser, function(req, response) {
         var handleObj = { mySearches: true };
         response.render('index', handleObj);	
-})
+});
 
 router.get('/myarticles', authenticatedUser, function(req, response) {
         var handleObj = { myArticles: true };
         response.render('index', handleObj);	
-})
+});
 
 router.get('/drafts', authenticatedUser, function(req, response) {
         var handleObj = { drafts: true };
         response.render('index', handleObj);	
-})
+});
+
+router.get('/about', function(req, response){
+	var handleObj = { about: true };
+	response.render('index', handleObj);
+});
 
 //Show the cultures menu
 router.get('/cultures', function(req, response) {
@@ -124,8 +129,30 @@ router.get('/subjects', function(req, response) {
 });
 
 router.get('/form', function(req, response) {
-    var handleForm = { showForm: true };
-    response.render('index', handleForm);
+
+    models.ethn_fields.findAll({}).then(function(data) {
+    	var topicsArr = [];
+    	var subTopsArr = [];
+
+    	//Initialize a full object array that relates each subject with its main and sub-topics
+    	var fullSubjArr = [];
+
+    	for (i=0; i<data.length; i++) {
+    		//Loops through data and pushes new value into the arrays if it doesn't already exist
+    		if (topicsArr.indexOf(data[i].main_topic) === -1){
+    			topicsArr.push(data[i].main_topic);
+    		}
+    		if (subTopsArr.indexOf(data[i].subtopic) === -1 && data[i].subtopic != "" && data[i].subtopic !== null){
+    			subTopsArr.push(data[i].subtopic);
+    		}
+    		fullSubjArr.push({main_topic:data[i].main_topic, subtopic: data[i].subtopic, subject: data[i].name});
+    	}
+    	topicsArr.sort();
+    	var subjsString = JSON.stringify(fullSubjArr);
+        var handleForm = { topic: topicsArr, allSubjs: subjsString, showForm: true };
+        response.render('index', handleForm);
+    });
+
 });
 
 router.get('/authenticated', authenticatedUser, function(req, response) {
@@ -212,6 +239,7 @@ router.post('/item/create/', function(req, response){
 	var reqUrl = req.body.url;
 	var reqPublication = req.body.publication;
 	var reqMainDesc = req.body.main_desc;
+	var reqMuseum = req.body.museum;
 	var reqYouTube = req.body.youTube;
 	var reqImgBlob = req.body.imgToBase64;
 
@@ -365,7 +393,8 @@ router.post('/item/create/', function(req, response){
 			.then (function(){
 				models.media_source.create({
 					content_id: currId,
-					image_b64: reqImgBlob
+					image_b64: reqImgBlob,
+					museum: reqMuseum
 				})
 			})
 

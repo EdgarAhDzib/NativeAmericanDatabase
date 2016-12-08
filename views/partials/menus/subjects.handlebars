@@ -10,11 +10,12 @@
 <div class="col-xs-12 col-md-10">
 	<div class="panel panel-default">
 		<div id="resultsHeading" class="panel-heading">
-			<h2>Browse by Subject</h2>
+			<h2>Subject List&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/subjects" style="color: white;">Browse Alphabetically</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/subjects/tree" style="color: white;">Browse by Topic</a></h2>
 		</div>
 		<div id="resultsBody" class="panel-body">
 			{{#if tree}}
 
+				<h2>Click any topic for a full menu!</h2>
 				<ul>
 					{{#each topic}}
 						<br/>
@@ -29,11 +30,13 @@
 				</div>
 
 			{{else}}
+				
 				{{#each entry}}
 					<div class="col-xs-12 col-md-3">
 						<p><a href="../subj/{{this}}"><span class="underScores">{{this}}</span></a></p>
 					</div>
 				{{/each}}
+
 			{{/if}}			
 		</div>
 	</div>	

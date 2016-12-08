@@ -17,9 +17,24 @@ $('.mainEthn').each(function(index) {
 	}
 });
 
+$('.formCateg').each(function(index) {
+	var mainTopic = $(this).attr('id');
+	var mainTopCaps = mainTopic.toUpperCase();
+	for (i=0; i<subjectJSON.length; i++){
+		if (subjectJSON[i].main_topic === $(this).attr('id')) {
+			$(this).append('<div class="col-xs-12 col-sm-4"><input type="checkbox" id="' + subjectJSON[i].subject + '"/>&nbsp;&nbsp;<span class="underScores">' + subjectJSON[i].subject + '</span><br/>&nbsp;</div>');
+		}
+	}
+});
+
 $('.hideList').children().hide();
+$('.hideBoxes').children().hide();
 
 //Each menu is hidden by default and collapsible on click
 $('.hideList').on('click', function(){
 	$(this).siblings('ul').children().toggle();
+});
+
+$('.hideBoxes').on('click', function(){
+	$(this).siblings('div').children().toggle();
 });

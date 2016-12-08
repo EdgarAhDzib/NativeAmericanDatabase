@@ -20,27 +20,25 @@
 		<div class="output">
 			<img class='thumbnail center-block img-responsive' id='preview'/><br/>
 		</div>
-		<h3>Subjects (select all that apply)</h3>
-		<h4>Materials</h4>
-		arrow <input type="checkbox" id="arrow"> feathers <input type="checkbox" id="feathers"> hat <input type="checkbox" id="hat">
-		<h4>Economy</h4>
-		hunting <input type="checkbox" id="hunting"> pastoralism <input type="checkbox" id="pastoralism"> agriculture <input type="checkbox" id="agriculture"> food exploitation and preparation <input type="checkbox" id="food exploitation and preparation"> market exchange <input type="checkbox" id="market exchange">
-		<h4>Ritual</h4>
-		altar <input type="checkbox" id="altar"> ritual dance <input type="checkbox" id="ritual dance"> ritual specialists <input type="checkbox" id="ritual specialists"> season rites <input type="checkbox" id="season rites"> rite of passage <input type="checkbox" id="rite of passage"> offering and or sacrifice <input type="checkbox" id="offering and or sacrifice"> food-related rites <input type="checkbox" id="food-related rites"> communal cult <input type="checkbox" id="communal cult">
-		<h4>Visual and Performing Arts</h4>
-		music <input type="checkbox" id="music"> dance <input type="checkbox" id="dance">
-		<h4>Gender</h4>
-		female behavior or activity <input type="checkbox" id="female behavior or activity"> male behavior or activity <input type="checkbox" id="male behavior or activity">
-		<h4>Folklore</h4>
-		historical account <input type="checkbox" id="historical account"> legend <input type="checkbox" id="legend"> myth <input type="checkbox" id="myth"> hero figure <input type="checkbox" id="hero figure">
-		<h4>Settlement</h4>
-		nomadic <input type="checkbox" id="nomadic"> semi-nomadic <input type="checkbox" id="semi-nomadic"> sedentary <input type="checkbox" id="sedentary">
-		<h4>Responses to Modernization and Globalization</h4>
-		mission <input type="checkbox" id="mission">
+		<h3>Subjects<br/>(Click any topic for full menu, check all boxes that apply)</h3>
+
+		{{#each topic}}
+			<br/>
+			<div class="col-xs-12">
+				<h4 class="underScores hideBoxes">{{this}}</h4>
+				<div class="formCateg hideBoxes" id="{{this}}"></div>
+			</div>
+		{{/each}}
+
 		<br/><br/>
 		<button class="btn btn-default" type="submit" id="submit">Submit</button>
 	</form>
 	</div>
 </div>
 <div class="col-md-3"></div>
+
+<div id="allSubjs">
+	{{allSubjs}}
+</div>
+
 {{/if}}

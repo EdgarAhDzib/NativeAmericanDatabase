@@ -45,7 +45,7 @@ $('.btn-primary').on('click', function () {
 		$('#preview').hide();
 		break;
 		case "picButton":
-		mediaDiv = "<div>Description:<br/><textarea id='main_desc' rows='10' cols='80'></textarea><br/><div id='thumbRev'></div></div>"
+		mediaDiv = "<div>Description:<br/><textarea id='main_desc' rows='10' cols='80'></textarea><br/>Museum:<br/><input type='text' id='museum' /><br/><div id='thumbRev'></div></div>"
 		$('#imageInput').show();
 		$('#preview').show();
 		break;
@@ -63,6 +63,7 @@ $("#submit").on("click", function(){
 	var url = "";
 	var publication = "";
 	var main_desc = "";
+	var museum = "";
 	var ytCode = "";
 
 	//Process only if one of the media option buttons is clicked
@@ -122,6 +123,10 @@ $("#submit").on("click", function(){
 			main_desc = $('#main_desc').val().trim();
 		}
 
+		if ( typeof $('#museum').val() === "string"){
+			museum = $('#museum').val().trim();
+		}
+
 		//Get the input from all checkboxes
 		var boxVals = [];
 			$('input:checkbox:checked').each(function(i){
@@ -141,6 +146,7 @@ $("#submit").on("click", function(){
 			publication: publication,
 			main_desc: main_desc,
 			ethn_fields: boxVals,
+			museum: museum,
 			youTube: ytCode,
 			imgToBase64: imgToBase64
 		};
