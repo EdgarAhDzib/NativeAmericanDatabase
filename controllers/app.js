@@ -19,6 +19,17 @@ models.content_fields.belongsTo(models.text_contents, { foreignKey: 'id' });
 models.media_source.belongsTo(models.text_contents, { foreignKey: 'id' });
 models.text_contents.hasOne(models.source_ref, { foreignKey: 'content_id' });
 
+//Sequelize associations for saved searches
+models.text_contents.hasMany(models.saved_searches, {foreignKey: 'content_id'});
+models.user_info.hasMany(models.saved_searches, {foreignKey: 'user_id'});
+models.saved_searches.belongsTo(models.text_contents, { foreignKey: 'id' });
+models.saved_searches.belongsTo(models.user_info, { foreignKey: 'id' });
+
+//Initialize variables that will be assigned through the query
+var userName = "";
+var currId;
+var handleObj;
+
 // Below are the routes which will be needed by the app
 
 //Redirect the default path to /home
@@ -180,8 +191,6 @@ router.get('/subj/:categ', function(req, response) {
 router.get('/group/:groupname', function(req, response) {
     var groupname = req.params.groupname;
 
-    models.text_contents.hasMany(models.media_source, { foreignKey: 'content_id' });
-    models.media_source.belongsTo(models.text_contents, { foreignKey: 'id' });
     models.text_contents.findAll({
             where: { group: groupname },
             include: [{
@@ -195,8 +204,15 @@ router.get('/group/:groupname', function(req, response) {
 
 });
 
+//Get the item according to its text_contents ID number
 router.get('/item/:id', function(req, response) {
     var itemId = req.params.id;
+    var userId = "";
+    if (req.user) {
+    	userId=req.user.id;
+    }
+    console.log("USER ID is " + userId);
+
     models.text_contents.findAll({
             where: { id: itemId },
             include: [{
@@ -205,21 +221,55 @@ router.get('/item/:id', function(req, response) {
                 model: models.media_source
             }, {
                 model: models.source_ref
-            }],
+            }, {
+            	//This inclusion will check whether the item is already saved for the user - and thus whether to remove it
+            	model: models.saved_searches
+            }
+            ],
         })
         .then(function(results) {
-            var handleObj = { entry: results, itemPage: true };
-            response.render('index', handleObj);
+            handleObj = { entry: results, itemPage: true, isSaved: false };
+
+        	for (i=0; i<results.length; i++){
+        		currId = results[i].dataValues.id;
+
+        		if (results[i].saved_searches.length > 0) {
+
+        			//Match the item for logged in user and ID in saved_searches table
+	        		if (userId === results[i].saved_searches[0].dataValues.user_id && currId === results[i].saved_searches[0].dataValues.content_id) {
+
+	        			//Then toggle button to indicate it is already saved for current user
+	        			handleObj = { entry: results, itemPage: true, isSaved: true };
+	        		}
+        		}
+        	}
+        	//Moved the render from this scope to await completion of conditional logic        	
+        }).then(function(){
+        	response.render('index', handleObj);
         });
+
+});
+
+//Save an item to Searches by posting with its ID number
+router.post('/item/save', function(req,response){
+	var saveItem = req.body.item_id;
+    var userId = "";
+    var createDate = new Date();
+	var updateDate = new Date();
+	
+	//Insert record only if user is logged in    
+    if (req.user) {
+    	userId=req.user.id;
+    	models.saved_searches.create({
+    		user_id: userId,
+    		content_id: saveItem
+    	});
+    }
 
 });
 
 //Create a variable that will be associated with the models' content
 var newItem;
-
-//Initialize variables that will be assigned through the query
-var userName = "";
-var currId;
 
 //Insert new item to text_contents table by receiving content from the posted JSON
 router.post('/item/create/', function(req, response){
@@ -360,7 +410,7 @@ router.post('/item/create/', function(req, response){
 		} // Closes the vidButton condition
 
 		else if (reqMedia === "picButton") {
-			console.log(req.body);
+
 			models.text_contents.create({
 
 				//Get keys from posted object
@@ -412,87 +462,6 @@ router.post('/item/create/', function(req, response){
 		} //closes the image condition
 	});
 }); //Closes the router function
-
-/*
-//Post will have options for text, photo, or video
-//If photo:
-	models.text_contents.create({
-		//Get keys from posted JSON
-		item_title: String(),
-		group:
-		period:
-		main_desc: //If content is newly written
-		prim_doc: //If the content is from already published material
-		if_published: false //Default, published TRUE after review
-		createdAt: createDate,
-		updatedAt: updateDate
-
-//Insert related content into associated tables
-		//For source_refs table:
-		content_id:
-		author:
-		contributor:
-		publication:
-		createdAt: createDate,
-		updatedAt: updateDate
-
-		//For media_sources:
-		content_id:
-		img_ref_1:
-		museum:
-		createdAt: createDate,
-		updatedAt: updateDate
-
-		//For content_fields table (There could be several, so this will require a loop)
-		content_id:
-		ethn_id:
-		createdAt: createDate,
-		updatedAt: updateDate
-
-	}).then (function(){
-		response.redirect('/home');
-	});
-
-//If video:
-	models.text_contents.create({
-		//Get keys from posted JSON
-		item_title: String(),
-		group:
-		period:
-		main_desc: //If content is newly written
-		prim_doc: //If the content is from already published material
-		if_published: false //Default, published TRUE after review
-		createdAt: createDate,
-		updatedAt: updateDate
-
-//Insert related content into associated tables
-		//For source_refs table:
-		content_id:
-		author:
-		contributor:
-		publication:
-		createdAt: createDate,
-		updatedAt: updateDate
-
-		//For media_sources:
-		content_id:
-		youTube: String(),
-		museum:
-		createdAt: createDate,
-		updatedAt: updateDate
-
-		//For content_fields table (There could be several, so this will require a loop)
-		content_id:
-		ethn_id:
-		createdAt: createDate,
-		updatedAt: updateDate
-
-	}).then (function(){
-		response.redirect('/home');
-	});
-
-}); //Closes the router function
-	*/
 
 function authenticatedUser(req, response, next) {
     if (req.isAuthenticated()) {

@@ -1,0 +1,10 @@
+{{#if isSaved}}
+	
+	<br/><br/><button class="btn btn-danger" id="{{this.id}}"><h4>ARTICLE SAVED</h4></button>
+
+{{else}}
+	{{#each entry}}
+	<br/><br/><form id="saveItem"><button class="btn btn-default" type="submit" id="{{this.id}}"><h4>SAVE ARTICLE</h4></button></form>
+	{{/each}}
+
+{{/if}}

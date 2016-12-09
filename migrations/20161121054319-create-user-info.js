@@ -17,9 +17,7 @@ module.exports = {
       sword_fish: {
         type: Sequelize.STRING
       },
-      saved_searches: {
-        type: Sequelize.TEXT
-      },
+      //Removed the saved_searches column as it was interfering with association with the namesake table
       role : {
         type: Sequelize.STRING
       },

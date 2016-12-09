@@ -4,7 +4,6 @@ module.exports = function(sequelize, DataTypes) {
     name: DataTypes.STRING,
     email: DataTypes.STRING,
     sword_fish: DataTypes.STRING,
-    saved_searches: DataTypes.TEXT,
     role: DataTypes.STRING,
     draft: DataTypes.INTEGER
   }, {
@@ -13,6 +12,7 @@ module.exports = function(sequelize, DataTypes) {
         // associations can be defined here
         user_info.belongsToMany(models.media_source, {through: 'UserMedia'});
         user_info.belongsToMany(models.text_contents, {through: 'UserContent'});
+        user_info.belongsToMany(models.saved_searches, {through: 'UserSaves'});
       }
     }
   });

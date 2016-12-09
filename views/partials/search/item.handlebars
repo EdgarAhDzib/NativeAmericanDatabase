@@ -1,86 +1,97 @@
-{{#each entry}}
 <div class="col-xs-12"><h2></h2></div>
 <div class="col-xs-12 col-md-1"></div>
 <div class="col-xs-12 col-md-10">
 	<div class="panel panel-default">
 		<div id="resultsHeading" class="panel-heading">
+		{{#each entry}}
 		<h1 class="text-center" style="font-weight:700">{{{this.item_title}}}</h1>
+		{{/each}}
 	</div>
 	<div id="resultsBody" class="panel-body">
-		<h2 class="text-center"><a href="../group/{{this.group}}">{{this.group}}</a></h2>
-		<h3 class="text-center">{{this.period}}</h3>
-		<h4>{{{this.prim_doc}}}</h4>
-		<h4>{{{this.main_desc}}}</h4>
-		
-		{{#each media_sources}}
-			{{#if @first}}
-				<h3 class="text-center">Institution: {{this.museum}}</h3>
-			{{/if}}
+		{{#each entry}}
+			<h2 class="text-center"><a href="../group/{{this.group}}">{{this.group}}</a></h2>
+			<h3 class="text-center">{{this.period}}</h3>
+			<h4>{{{this.prim_doc}}}</h4>
+			<h4>{{{this.main_desc}}}</h4>
+			
+			{{#each media_sources}}
+				{{#if @first}}
+					<h3 class="text-center">Institution: {{this.museum}}</h3>
+				{{/if}}
 
-			<div class="youTubeFull" id="{{this.youtube}}"></div>
+				<div class="youTubeFull" id="{{this.youtube}}"></div>
 
-		{{/each}}
-		
+			{{/each}}
+			
+				<div class="col-xs-12">
+					<h4 class="text-center">Keywords: 
+						{{#each content_fields}}
+							<span><span style="font-size:150%">·</span> <a href="../../subj/{{this.ethn_id}}"><span class="underScores">{{this.ethn_id}}</span></a> </span>
+						{{/each}}
+					</h4>
+				</div>
+
+			{{#each media_sources}}
+	{{!-- 			{{#if @first}}
+					<div class="col-md-6">
+						<img class="imgOne thumbnail center-block" src="{{this.img_ref_1}}" width="350"/>
+					</div>
+				{{/if}}
+					<div class="col-md-6">
+						<img class="imgTwo thumbnail center-block" src="{{this.img_ref_2}}" width="350"/>
+					</div>
+
+				<div class="col-md-6">
+					<img class="imgThree thumbnail center-block" src="{{this.img_ref_3}}" width="350"/>
+				</div>
+				<div class="col-md-6">
+					<img class="imgFour thumbnail center-block" src="{{this.img_ref_4}}" width="350"/>
+				</div> --}}
+				{{#if @first}}
+					<div class="col-md-6">
+						<img class="imgOne thumbnail center-block img-responsive" src="{{this.image_b64}}" width="350"/>
+						<img class="imgOne thumbnail center-block img-responsive" src="{{this.img_ref_1}}">
+					</div>
+				{{/if}}
+					<div class="col-md-6">
+						<img class="imgTwo thumbnail center-block img-responsive" src="{{this.img_ref_2}}">
+					</div>
+
+				<div class="col-md-6">
+					<img class="imgThree thumbnail center-block img-responsive" src="{{this.img_ref_3}}">
+				</div>
+				<div class="col-md-6">
+					<img class="imgFour thumbnail center-block img-responsive" src="{{this.img_ref_4}}">
+				</div>
+			{{/each}}
+
 			<div class="col-xs-12">
-				<h4 class="text-center">Keywords: 
-					{{#each content_fields}}
-						<span><span style="font-size:150%">·</span> <a href="../../subj/{{this.ethn_id}}"><span class="underScores">{{this.ethn_id}}</span></a> </span>
-					{{/each}}
+				<h4>{{{this.notes}}}</h4>
+				<h4>{{{this.long_desc}}}</h4>
+				<h4>{{{this.context}}}</h4>
+				<h4>{{{this.research_notes}}}</h4>
+				<h4>{{{this.display}}}</h4>
+
+				<h4>
+					<span class="authorSpan">Author: {{source_ref.author}}</span><br/>
+					<span class="contribSpan">Contributor: {{source_ref.contributor}}</span><br/>
+					<span class="pubSpan">Publication: {{source_ref.publication}}</span><br/>
+					{{!-- <a href="{{source_ref.url}}" target="_blank">Link to original source</a> --}}
+					<a href="{{source_ref.url}}" target="_blank" class="btn btn-default" role="button"><span class="white">VIEW ORIGINAL SOURCE</span></a>
 				</h4>
-			</div>
 
-		{{#each media_sources}}
-{{!-- 			{{#if @first}}
-				<div class="col-md-6">
-					<img class="imgOne thumbnail center-block" src="{{this.img_ref_1}}" width="350"/>
-				</div>
-			{{/if}}
-				<div class="col-md-6">
-					<img class="imgTwo thumbnail center-block" src="{{this.img_ref_2}}" width="350"/>
-				</div>
-
-			<div class="col-md-6">
-				<img class="imgThree thumbnail center-block" src="{{this.img_ref_3}}" width="350"/>
-			</div>
-			<div class="col-md-6">
-				<img class="imgFour thumbnail center-block" src="{{this.img_ref_4}}" width="350"/>
-			</div> --}}
-			{{#if @first}}
-				<div class="col-md-6">
-					<img class="imgOne thumbnail center-block img-responsive" src="{{this.image_b64}}" width="350"/>
-					<img class="imgOne thumbnail center-block img-responsive" src="{{this.img_ref_1}}">
-				</div>
-			{{/if}}
-				<div class="col-md-6">
-					<img class="imgTwo thumbnail center-block img-responsive" src="{{this.img_ref_2}}">
-				</div>
-
-			<div class="col-md-6">
-				<img class="imgThree thumbnail center-block img-responsive" src="{{this.img_ref_3}}">
-			</div>
-			<div class="col-md-6">
-				<img class="imgFour thumbnail center-block img-responsive" src="{{this.img_ref_4}}">
 			</div>
 		{{/each}}
 
 		<div class="col-xs-12">
-			<h4>{{{this.notes}}}</h4>
-			<h4>{{{this.long_desc}}}</h4>
-			<h4>{{{this.context}}}</h4>
-			<h4>{{{this.research_notes}}}</h4>
-			<h4>{{{this.display}}}</h4>
 
-			<h4>
-				<span class="authorSpan">Author: {{source_ref.author}}</span><br/>
-				<span class="contribSpan">Contributor: {{source_ref.contributor}}</span><br/>
-				<span class="pubSpan">Publication: {{source_ref.publication}}</span><br/>
-				<h4>
-					{{!-- <a href="{{source_ref.url}}" target="_blank">Link to original source</a> --}}
-					<a href="{{source_ref.url}}" target="_blank" class="btn btn-default" role="button"><h5 class="white">VIEW ORIGINAL SOURCE</h5></a>
-				</h4>	
-			</h4>
+		{{#if user}}
+
+			{{> search/savebutton}}
+
+		{{/if}}
+
 		</div>
-	</div>	
+	</div>
 </div>		
 <div class="col-xs-12 col-md-1"></div>
-{{/each}}

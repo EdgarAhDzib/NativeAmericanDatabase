@@ -21,6 +21,7 @@ module.exports = function(sequelize, DataTypes) {
         text_contents.hasOne(models.source_ref, { foreignKey: 'id'});
         text_contents.belongsToMany(models.user_info, {through: 'UserContent'});
         text_contents.belongsToMany(models.content_fields, {through: 'FieldContent'});
+        text_contents.belongsToMany(models.saved_searches, {through: 'ContentSaves'});
       }
     }
   });
