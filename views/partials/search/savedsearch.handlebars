@@ -1,0 +1,28 @@
+<div class="row"><div class="col-xs-12"><h2></h2></div></div>
+<div class="col-xs-12 col-md-1"></div>
+<div class="col-xs-12 col-md-10">
+	<div class="panel panel-default">
+		<div id="resultsHeading" class="panel-heading well">
+			<h2>My Searches</h2>
+		</div>
+		<div class="panel-body">
+				{{#each entry}}
+					<div class="col-xs-6 col-sm-4">
+						<p><h3><a href="../item/{{this.id}}">{{this.item_title}}</a></h3></p>
+						{{#each media_sources}}
+							{{#if @first}}
+								<a href="../item/{{this.content_id}}" class="queryItem">
+									<div class="youTube center-block" id="{{this.youtube}}"></div>
+									<img src="{{this.image_b64}}" class="thumbnail center-block" width="150"/>
+									<img src="{{this.img_ref_1}}" class="thumbnail center-block" width="150"/>
+								</a>
+							{{/if}}
+						{{/each}}
+						<form class="removeItem"><button class="btn btn-warning" type="submit" id="{{this.id}}"><h4>REMOVE ARTICLE</h4></button></form>
+					</div>
+				{{/each}}
+
+		</div>
+	</div>	
+</div>
+<div class="col-xs-12 col-md-1"></div>
