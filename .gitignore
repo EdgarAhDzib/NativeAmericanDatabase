@@ -1,4 +1,6 @@
 node_modules
+config/keys.js
+config/config.json
 dev_notes
 dec16_backup.sql
 dec16_local.sql
