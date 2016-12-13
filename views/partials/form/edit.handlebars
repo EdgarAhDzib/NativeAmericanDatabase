@@ -1,0 +1,80 @@
+{{#if user}}
+<br/><br/>
+<div class="col-md-3"></div>
+<div id="formInput" class="col-md-6">
+	<div class="col-md-12">
+
+	<h2>Article Edit :</h2>
+	
+	<form class="input-group" id="imageUpdate">
+		Image Upload: <input id='fileConvert' type='file' onchange='fileToURL();'/>
+	</form>
+	<form id="editForm">
+		{{#each edit}}
+			<span class="itemIdSpan" id="{{this.id}}"><span>
+			Title: <input type="text" id="itemTitle" value="{{this.item_title}}"><br/><br/>
+			Culture: <input type="text" id="groupName" value="{{this.group}}"><br/><br/>
+			Period: <input type="text" id="period" value="{{this.period}}"><br/><br/>
+
+			{{#each source_ref}}
+				{{#if @first}}
+					Author: <input type="text" id="author" value="{{this.author}}"><br/><br/>
+					URL: <input type="text" id="url" value="{{this.url}}"><br/><br/>
+					Publication:
+					<br/>
+					<textarea id='publication' rows='4' cols='80'>{{this.publication}}</textarea>
+				{{/if}}
+			{{/each}}
+
+			Notes:
+			<br/>
+			<textarea id='notes' rows='10' cols='80'>{{this.notes}}</textarea>
+			<br/>
+			Original Document:
+			<br/>
+			<textarea id='prim_doc' rows='10' cols='80'>{{this.prim_doc}}</textarea>
+			<br/>
+			Description:
+			<br/>
+			<textarea id='main_desc' rows='10' cols='80'>{{this.main_desc}}</textarea>
+			<br/>
+
+			
+			Museum: <input type='text' id='museum' value='{{#each media_sources}}{{this.museum}}{{/each}}'/><br/><br/>
+			<div class="output">
+				<img class='thumbnail center-block img-responsive' src='{{#each media_sources}}{{this.image_b64}}{{/each}}'/>
+				<br/>
+			</div>
+			
+		{{/each}}
+
+		<h3>Subjects<br/>(Click any topic for full menu, check all boxes that apply)</h3>
+
+		{{#each topic}}
+			<br/>
+			<div class="col-xs-12">
+				<h4 class="underScores hideBoxes">{{this}}</h4>
+				<div class="formCateg hideBoxes" id="{{this}}"></div>
+			</div>
+		{{/each}}
+
+		<br/><br/>
+		<div class="col-xs-12 col-sm-3"><button class="btn btn-default" type="submit" id="update">Update</button></div>
+		<div class="col-xs-12 col-sm-3"><button class="btn btn-primary"><a href="../myarticles" style="color:white;">Return to My Articles</a></button></div>
+		<div class="col-xs-12 col-sm-6"></div>
+	</form>
+	</div>
+</div>
+<div class="col-md-3">&nbsp;</div>
+
+<br clear="all"/>
+
+<div id="allSubjs">
+	{{allSubjs}}
+</div>
+
+<div id="checkedSubjs">
+	{{checkedSubjs}}
+</div>
+
+{{/if}}

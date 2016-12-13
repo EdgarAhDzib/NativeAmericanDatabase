@@ -20,6 +20,9 @@ module.exports = {
       contributor: {
         type: Sequelize.STRING
       },
+      user_id: {
+        type: Sequelize.INTEGER
+      },
       publication: {
         type: Sequelize.TEXT
       },

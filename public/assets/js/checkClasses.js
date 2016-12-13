@@ -1,8 +1,6 @@
-$('.queryItem').each(function (index,value) {
-	var ifImg = $(this).children('img').attr('src');
-	var ifYouTube = $(this).children('div').attr('id');
-	//If neither the img element's src or the div element's ID is a string, the result is the preview to a written note
-	if (ifImg == '' && ifYouTube == '') {
+$('.item-window').each(function(index,value) {
+	var ifImageDiv = $(this).find('.queryItem').html();
+	if (!ifImageDiv) {
 		$(this).prepend("<div width='250'><font style='font-size:300%'>Notes</font></div>");
 	}
 });

@@ -5,7 +5,6 @@ module.exports = function(sequelize, DataTypes) {
     email: DataTypes.STRING,
     sword_fish: DataTypes.STRING,
     role: DataTypes.STRING,
-    draft: DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function(models) {

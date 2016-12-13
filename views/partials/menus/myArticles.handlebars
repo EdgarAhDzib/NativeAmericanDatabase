@@ -1,0 +1,35 @@
+{{#each entry}}
+	<div class="panel panel-default">
+		<div id="resultsHeading" class="panel-heading">
+			<font style="font-size:200%">{{{this.item_title}}}, {{this.group}}</font>
+		</div>
+		<div id="resultsBody" class="panel-body">
+			<div class="row">
+				<div class="col-xs-12">
+					<span class="preview">{{{this.prim_doc}}}</span>
+					{{#each media_sources}}
+						{{#if @first}}
+							<a href="../item/{{this.content_id}}" class="queryItem">
+								<div class="youTube center-block" id="{{this.youtube}}"></div>
+								<img src="{{this.image_b64}}" class="thumbnail center-block" width="250"/>
+								<img src="{{this.img_ref_1}}" class="thumbnail center-block" width="250"/>
+							</a>
+						{{/if}}
+					{{/each}}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-2">	
+					<a href="../item/{{this.id}}" class="btn btn-default" role="button"><h5 class="white">VIEW ARTICLE</h5></a>
+				</div>
+				<div class="col-xs-2">
+					<a href="../edit/{{this.id}}" class="btn btn-warning" role="button"><h5 class="white">EDIT ARTICLE</h5></a>
+				</div>
+				<div class="col-xs-6">
+				</div>
+				<div class="col-xs-2">
+				</div>	
+			</div>	
+		</div>
+	</div>
+{{/each}}

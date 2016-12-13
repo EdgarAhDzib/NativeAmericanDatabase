@@ -19,6 +19,7 @@
 			<li><a href="/home"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;New Search</a></li>
 			<li><a href="/about"><span class="glyphicon glyphicon-grain"></span>&nbsp;&nbsp;About</a></li>
 			{{#if user}}
+				{{!-- <li><a href="/account"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;My Account</a></li> --}}
 				<li><a href="/mysearches"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;My Searches</a></li>
 				<li><a href="/form"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Add Article</a></li>
 				<li><a href="/myarticles"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;My Articles</a></li>			
@@ -86,6 +87,10 @@
 
 {{#if showForm}}
 	{{> form/form}}
+{{/if}}
+
+{{#if itemEdit}}
+	{{> form/edit}}
 {{/if}}
 
 {{#if cultures}}
@@ -182,6 +187,12 @@
 
 {{/if}}
 
+{{#if myAccount}}
+
+	{{> form/myAccount}}
+
+{{/if}}
+
 {{#if mySearches}}
 	
 	{{> search/savedsearch}}
@@ -197,6 +208,9 @@
 				<h2>My Articles
 				</h2>
 			</div>
+
+			{{> menus/myArticles}}
+
 		</div>
 		<div class="col-xs-12 col-md-1"></div>	
 	</div>			

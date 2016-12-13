@@ -6,7 +6,7 @@
 				<div id="resultsHeading" class="panel-heading">
 					<font style="font-size:200%">{{{this.item_title}}}, {{this.group}}</font>
 				</div>
-				<div id="resultsBody" class="panel-body">
+				<div id="resultsBody" class="panel-body item-window">
 					<div class="row">
 						<div class="col-xs-12">
 							<h3>Preview</h3>
@@ -15,8 +15,8 @@
 								{{#if @first}}
 									<a href="../item/{{this.content_id}}" class="queryItem">
 										<div class="youTube center-block" id="{{this.youtube}}"></div>
-										<img src="{{this.image_b64}}" class="thumbnail center-block" width="250"/>
-										<img src="{{this.img_ref_1}}" class="thumbnail center-block" width="250"/>
+										<img src="{{this.image_b64}}" class="thumbnail center-block base_64" width="250"/>
+										<img src="{{this.img_ref_1}}" class="thumbnail center-block museum_img" width="250"/>
 									</a>
 								{{/if}}
 							{{/each}}

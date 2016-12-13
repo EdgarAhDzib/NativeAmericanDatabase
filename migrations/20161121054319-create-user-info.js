@@ -21,9 +21,6 @@ module.exports = {
       role : {
         type: Sequelize.STRING
       },
-      draft : {
-        type: Sequelize.INTEGER
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

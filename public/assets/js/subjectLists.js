@@ -1,9 +1,14 @@
-//The object array from the /subject/tree Handlebars route is rendered,
-//but into an invisible DIV that only JQuery will access
+//The object arrays from the /subject/tree Handlebars and /form/ routes are rendered,
+//but into invisible DIVs that only JQuery will access
 $('#allSubjs').hide();
 var subjectString = $('#allSubjs').text();
-//Revert the array to an object for JQuery manipulation
+
+$('#checkedSubjs').hide();
+var checkedString = $('#checkedSubjs').text().trim();
+
+//Revert the arrays to objects for JQuery manipulation
 var subjectJSON = JSON.parse(subjectString);
+var checkedJSON;
 
 //Compare the IDs of each menu category to the main_topic values from the object array,
 //to populate the ULs with subjects aligned with their respective topics
@@ -22,7 +27,7 @@ $('.formCateg').each(function(index) {
 	var mainTopCaps = mainTopic.toUpperCase();
 	for (i=0; i<subjectJSON.length; i++){
 		if (subjectJSON[i].main_topic === $(this).attr('id')) {
-			$(this).append('<div class="col-xs-12 col-sm-4"><input type="checkbox" id="' + subjectJSON[i].subject + '"/>&nbsp;&nbsp;<span class="underScores">' + subjectJSON[i].subject + '</span><br/>&nbsp;</div>');
+			$(this).append('<div class="col-xs-12 col-sm-4"><input type="checkbox" class="ethnCheckBox" id="' + subjectJSON[i].subject + '"/>&nbsp;&nbsp;<span class="underScores">' + subjectJSON[i].subject + '</span><br/>&nbsp;</div>');
 		}
 	}
 });
@@ -38,3 +43,26 @@ $('.hideList').on('click', function(){
 $('.hideBoxes').on('click', function(){
 	$(this).siblings('div').children().toggle();
 });
+
+//Parse the array for already existing subjects only if this DIV has contents
+if ( checkedString.length > 0 ) {
+	checkedJSON = JSON.parse(checkedString);
+	//Compare the previously associated ethnographic subject fields with the full list
+	//and change all matching names to "checked" state
+	$('.ethnCheckBox').each(function(index){
+		var subjName = $(this).attr('id');
+
+			for (i=0; i<checkedJSON.length; i++){
+				if (checkedJSON[i] === subjName) {
+					$(this).attr('checked',true);
+				}
+				var cleanUp = checkedJSON[i].replace(/_/g," ");
+				var toLower = cleanUp.toLowerCase();
+
+				if (toLower === subjName) {
+					$(this).attr('checked',true);
+				}
+			}
+		
+	});
+}

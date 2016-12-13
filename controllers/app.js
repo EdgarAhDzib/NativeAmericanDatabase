@@ -98,12 +98,111 @@ router.get('/mysearches', authenticatedUser, function(req, response) {
 	});
 });
 
+router.get('/account', authenticatedUser, function(req, response) {
+	var userId = "";
+	if (req.user) {
+		userId=req.user.id;
+	}
+
+	models.user_info.findAll({
+		where: { id: userId }
+	})
+	.then(function(results){
+		handleObj = { entry: results, myAccount: true };
+		response.render('index', handleObj);
+	});
+
+});
+
 router.get('/myarticles', authenticatedUser, function(req, response) {
-		var handleObj = { myArticles: true };
-		response.render('index', handleObj);	
+	var userId = "";
+	if (req.user) {
+		userId=req.user.id;
+	}
+
+	models.text_contents.findAll({
+		include: [{
+			model: models.source_ref,
+			where: { user_id: userId }
+			//And list all: drafts and published; indicate whether published
+		},
+		{
+			model: models.media_source
+		}
+		],
+	})
+	.then(function(results){
+		handleObj = { entry: results, myArticles: true };
+		response.render('index', handleObj);
+	});
+});
+
+//Get the item according to its text_contents ID number
+router.get('/edit/:id', function(req, response) {
+	var itemId = req.params.id;
+	var userId = "";
+	if (req.user) {
+		userId=req.user.id;
+	}
+
+	models.text_contents.findAll({
+			where: { id: itemId },
+			include: [
+				{
+				model: models.content_fields
+				}, {
+					model: models.media_source
+				}, {
+					model: models.source_ref
+				}
+			],
+		})
+		.then(function(results) {
+			models.ethn_fields.findAll({
+			})
+			.then(function(data) {
+				var topicsArr = [];
+				var subTopsArr = [];
+				var itemTopics = [];
+
+				//Initialize a full object array that relates each subject with its main and sub-topics
+				var fullSubjArr = [];
+
+				for (i=0; i<data.length; i++) {
+					//Loops through data and pushes new value into the arrays if it doesn't already exist
+					if (topicsArr.indexOf(data[i].main_topic) === -1){
+						topicsArr.push(data[i].main_topic);
+					}
+					if (subTopsArr.indexOf(data[i].subtopic) === -1 && data[i].subtopic != "" && data[i].subtopic !== null){
+						subTopsArr.push(data[i].subtopic);
+					}
+					fullSubjArr.push({main_topic:data[i].main_topic, subtopic: data[i].subtopic, subject: data[i].name});
+				}
+				topicsArr.sort();
+				var subjsString = JSON.stringify(fullSubjArr);
+
+				//Loop through article's already existing content fields and push them into array
+				//whose values will be compared with the full checkbox set: to mark which boxes will be pre-selected
+				for (i=0; i<results.length; i++) {
+
+					if (results[0].content_fields) {
+						var ethnCateg = results[0].content_fields;
+						for (j=0; j<ethnCateg.length; j++){
+							itemTopics.push(ethnCateg[j].dataValues.ethn_id)
+						}
+					}
+				}
+				var currTopicsString = JSON.stringify(itemTopics);
+
+				handleObj = { edit: results, checkedSubjs: currTopicsString, topic: topicsArr, allSubjs: subjsString, itemEdit: true };
+				response.render('index', handleObj);
+			});
+	});
+
 });
 
 router.get('/drafts', authenticatedUser, function(req, response) {
+	//List the unpublished articles
 		var handleObj = { drafts: true };
 		response.render('index', handleObj);	
 });
@@ -232,7 +331,6 @@ router.get('/item/:id', function(req, response) {
 	if (req.user) {
 		userId=req.user.id;
 	}
-	console.log("USER ID is " + userId);
 
 	models.text_contents.findAll({
 			where: { id: itemId },
@@ -323,6 +421,7 @@ var newItem;
 router.post('/item/create/', function(req, response){
 
 	var reqFields = [];
+	var userId = req.user.id;
 
 	var createDate = new Date();
 	var updateDate = new Date();
@@ -348,7 +447,7 @@ router.post('/item/create/', function(req, response){
 	}
 
 	models.user_info.find({
-			where: { id: req.user.id }
+			where: { id: userId }
 	})
 	.then(function(results) {
 		userName = results.name;
@@ -374,6 +473,7 @@ router.post('/item/create/', function(req, response){
 					author: reqAuthor,
 					url: reqUrl,
 					contributor: userName,
+					user_id: userId,
 					publication: reqPublication
 				}
 
@@ -401,10 +501,6 @@ router.post('/item/create/', function(req, response){
 
 			});
 
-	/*
-	text_contents.belongsToMany(models.content_fields, {through: 'FieldContent'});
-	*/
-
 		} // Closes the textButton condition
 		else if (reqMedia === "vidButton") {
 			models.text_contents.create({
@@ -423,6 +519,7 @@ router.post('/item/create/', function(req, response){
 					author: reqAuthor,
 					url: reqUrl,
 					contributor: userName,
+					user_id: userId,
 					publication: reqPublication
 				}
 			},
@@ -475,6 +572,7 @@ router.post('/item/create/', function(req, response){
 					author: reqAuthor,
 					url: reqUrl,
 					contributor: userName,
+					user_id: userId,
 					publication: reqPublication
 				}
 			},
@@ -507,9 +605,132 @@ router.post('/item/create/', function(req, response){
 				}
 
 			});
+	
 		} //closes the image condition
-	});
+	
+	}); //Closes the Sequelize create function
+
 }); //Closes the router function
+
+router.post('/item/update/', function(req, response){
+
+	var userId = req.user.id;
+	var reqFields = [];
+	var createDate = new Date();
+	var updateDate = new Date();
+
+	currId = req.body.item_id;
+	var reqTitle = req.body.item_title;
+	var reqGroup = req.body.group_name;
+	var reqPeriod = req.body.period;
+	var reqAuthor = req.body.author;
+	var reqNotes = req.body.notes;
+	var reqPrimDoc = req.body.prim_doc;
+	var reqUrl = req.body.url;
+	var reqPublication = req.body.publication;
+	var reqMainDesc = req.body.main_desc;
+	var reqMuseum = req.body.museum;
+	var reqYouTube = req.body.youTube;
+	var reqImgBlob = req.body.imgToBase64;
+
+	if (req.body['ethn_fields[]']) {
+		for (i=0; i<req.body['ethn_fields[]'].length; i++) {
+			reqFields.push(req.body['ethn_fields[]'][i]);
+		}
+	}
+
+	//Set conditions that user is logged in with their proper ID, which must also be associated with the item ID
+	models.source_ref.findAndCountAll({
+		where: {
+			user_id: userId,
+			content_id: currId
+		}
+	})
+	.then(function(results){
+
+		if (results.count === 1) {
+
+			models.text_contents.update({
+				item_title: reqTitle,
+				group: reqGroup,
+				period: reqPeriod,
+				notes: reqNotes,
+				main_desc: reqMainDesc,
+				prim_doc: reqPrimDoc,
+				updatedAt: updateDate,
+
+			},
+			{
+				where: {id: currId}
+			}
+			)
+			.then (function(){
+				//The associated update wasn't working, so the source_ref updates moved to their own promise function
+				models.source_ref.update({
+					author: reqAuthor,
+					url: reqUrl,
+					publication: reqPublication,
+					updatedAt: updateDate
+				},
+				{
+					where: {content_id: currId}
+				}
+				)
+			})
+			.then (function(){
+
+				models.media_source.findAndCountAll({
+					where: {content_id: currId}
+				})
+				.then(function(mediaCount){
+					//Created an IF condition because insertOrUpdate doesn't work properly unless the media_source
+					//models is included, which can't be done as source_ref already has
+					if (mediaCount.count > 0) {
+						models.media_source.update({
+						content_id: currId,
+						youtube: reqYouTube,
+						image_b64: reqImgBlob,
+						museum: reqMuseum,
+						updatedAt: updateDate
+						},
+						{
+							where: {content_id: currId}
+						}
+						)
+					} else {
+						models.media_source.create({
+							content_id: currId,
+							youtube: reqYouTube,
+							image_b64: reqImgBlob,
+							museum: reqMuseum,
+							createdAt: createDate,
+							updatedAt: updateDate
+						})
+					}
+				})
+			})
+			//Add the associations for content_fields
+			.then(function(){
+					//Remove original categories
+					models.content_fields.destroy({
+					where: {content_id: currId}
+				})
+				.then(function(){
+					//Loop the subjects from the array through SQL INSERT query
+					for (j=0; j<reqFields.length; j++) {
+						connection.query("INSERT INTO content_fields (`content_id`, `ethn_id`, `createdAt`, `updatedAt`) VALUES (?,?,?,?)", [currId, reqFields[j], createDate, updateDate], function(err){
+							if (err) throw err;
+						});
+					}
+				});
+
+			})
+			.then(function() {
+				response.redirect('/myarticles');
+			});
+		}
+	});
+});
 
 function authenticatedUser(req, response, next) {
 	if (req.isAuthenticated()) {
