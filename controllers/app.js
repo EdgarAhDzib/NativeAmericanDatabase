@@ -61,7 +61,7 @@ router.post('/search', function(req, response) {
 	*/
 	var searchTerm = req.body.srchterm;
 	console.log("SEARCHTERM "+searchTerm);
-	searchQuery = "SELECT * FROM text_contents WHERE MATCH (item_title,main_desc,prim_doc) AGAINST('"+searchTerm+"')";
+	searchQuery = "SELECT * FROM text_contents WHERE MATCH (item_title,main_desc,prim_doc) AGAINST('"+searchTerm+"') AND `if_published`= 1";
 	connection.query(searchQuery, function(err,results){
 		// if(err) throw err;
 		/*
@@ -294,6 +294,7 @@ router.get('/subj/:categ', function(req, response) {
 	var categ = req.params.categ;
 
 	models.text_contents.findAll({
+		where: { if_published: true },
 			include: [{
 				model: models.content_fields,
 				where: { ethn_id: categ }
@@ -312,7 +313,7 @@ router.get('/group/:groupname', function(req, response) {
 	var groupname = req.params.groupname;
 
 	models.text_contents.findAll({
-			where: { group: groupname },
+			where: { group: groupname, if_published: true },
 			include: [{
 				model: models.media_source
 			}],
@@ -333,7 +334,7 @@ router.get('/item/:id', function(req, response) {
 	}
 
 	models.text_contents.findAll({
-			where: { id: itemId },
+			where: { id: itemId, if_published: true },
 			include: [{
 				model: models.content_fields
 			}, {
